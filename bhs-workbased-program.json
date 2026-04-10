@@ -1,0 +1,212 @@
+{
+  "siteMeta": {
+    "programTitle": "BHS Link: Work-Based Learning Program",
+    "district": "Batavia Public School District 101",
+    "school": "Batavia High School",
+    "tagline": "Build the Workforce of Tomorrow",
+    "lastUpdated": "2026-01-30",
+    "contacts": [
+      {
+        "name": "Austin Savitski",
+        "email": "austi.savitski@gmail.com",
+        "role": "Program Coordinator"
+      },
+      {
+        "name": "Michael Theriault",
+        "email": "michael.theriault@bps101.net",
+        "role": "Program Coordinator"
+      }
+    ]
+  },
+  "heroSection": {
+    "headline": "Authentic, Career-Connected Learning",
+    "subheadline": "Connecting classroom learning with authentic workplace experiences to explore careers and develop employability skills.",
+    [cite_start]"mission": "To provide students with personalized, real-world learning opportunities to explore career pathways while building essential employability skills[cite: 1757, 1802].",
+    "callToAction": [
+      {
+        "label": "For Students: Apply Now",
+        "link": "https://forms.gle/y4q3agEf7DChagyV8"
+      },
+      {
+        "label": "For Partners: Become a Partner",
+        "link": "#partner-interest-form"
+      }
+    ]
+  },
+  "programOverview": {
+    [cite_start]"definition": "Work-Based Learning (WBL) is a continuum of experiences that provide students with opportunities to practice and enhance skills gained in their Career and Technical Education (CTE) program of study through sustained interactions with industry professionals[cite: 221, 229].",
+    "valueProposition": {
+      "forStudents": [
+        [cite_start]"Develop transferable self-management and job-related skills[cite: 1735].",
+        [cite_start]"Build professional networks[cite: 1736].",
+        [cite_start]"Apply classroom learning in authentic work settings[cite: 1737].",
+        [cite_start]"Gain insight into postsecondary and career decision-making[cite: 1739]."
+      ],
+      "forPartners": [
+        [cite_start]"Identify and train potential future employees early[cite: 1804].",
+        [cite_start]"Strengthen company presence in the community[cite: 1805].",
+        [cite_start]"Influence the next generation of skilled professionals[cite: 1806].",
+        [cite_start]"Gain fresh perspectives and energy on projects[cite: 1808]."
+      ]
+    }
+  },
+  "wblContinuum": {
+    [cite_start]"description": "A progression of experiences ranging from awareness to career preparation[cite: 225].",
+    "stages": [
+      {
+        "stageName": "Career Awareness",
+        "gradeLevel": "K-12",
+        "description": "Activities designed to spark interest and gather information about career options.",
+        "examples": [
+          [cite_start]"Career Days [cite: 311]",
+          [cite_start]"Guest Speakers [cite: 420]",
+          [cite_start]"Career-Based Service Learning [cite: 346]"
+        ]
+      },
+      {
+        "stageName": "Career Exploration",
+        "gradeLevel": "5-12",
+        "description": "Direct student contact with employers to gain knowledge of industry sectors.",
+        "examples": [
+          [cite_start]"Job Shadowing [cite: 646]",
+          [cite_start]"Business Tours [cite: 584]",
+          [cite_start]"Career Fairs [cite: 526]",
+          [cite_start]"Mentorship [cite: 755]"
+        ]
+      },
+      {
+        "stageName": "Workplace Experiences (Career Preparation)",
+        "gradeLevel": "11-12",
+        "description": "Sustained interactions in real workplace settings aligned to curriculum.",
+        "examples": [
+          [cite_start]"Internships (60+ hours) [cite: 1027]",
+          [cite_start]"Student-Led Enterprises [cite: 874]",
+          [cite_start]"School-Based Enterprises [cite: 904]",
+          [cite_start]"Youth Apprenticeships [cite: 1077]",
+          [cite_start]"Supervised Agricultural Experiences [cite: 987]"
+        ]
+      }
+    ]
+  },
+  "studentCourseInfo": {
+    "courseTitle": "Field Experience",
+    "department": "Career & Technical Education (CTE)",
+    "courseDetails": {
+      [cite_start]"credits": "1.0 per semester (repeatable) [cite: 1754]",
+      [cite_start]"gradeLevel": "11-12 (10th by administrative approval) [cite: 1754]",
+      [cite_start]"weighting": "Standard [cite: 1754]",
+      [cite_start]"length": "1 semester [cite: 1760]"
+    },
+    "prerequisites": [
+      [cite_start]"Age 16+ [cite: 1765]",
+      [cite_start]"Reliable transportation (unless placed at BHS) [cite: 1766]",
+      [cite_start]"Completed application [cite: 1767]",
+      [cite_start]"Commitment to weekly on-the-job requirements [cite: 1768]"
+    ],
+    "expectations": "Students participate in both in-person instruction and supervised work-based training. [cite_start]They must log hours, complete reflections, and receive supervisor feedback[cite: 1758, 1777].",
+    "applicationLink": "https://forms.gle/y4q3agEf7DChagyV8"
+  },
+  "partnerEngagementMenu": {
+    [cite_start]"description": "Various ways local businesses can engage with BHS students[cite: 1807].",
+    "opportunities": [
+      {
+        "type": "Guest Speaker",
+        "commitment": "Single session or panel",
+        [cite_start]"benefit": "Promote your company and industry to future talent[cite: 1808]."
+      },
+      {
+        "type": "Job Shadow",
+        "commitment": "1–2 days or a few hours",
+        [cite_start]"benefit": "Showcase company culture; identify aptitude early[cite: 1808]."
+      },
+      {
+        "type": "Field Experience / Internship",
+        "commitment": "Semester-long (60 hours), weekly hours",
+        [cite_start]"benefit": "Access pipeline of skilled students; evaluate potential hires[cite: 1808, 1024]."
+      },
+      {
+        "type": "Team Based Challenges",
+        "commitment": "Periodic check-ins or project mentorship",
+        [cite_start]"benefit": "Solve real business problems with student teams[cite: 1808]."
+      }
+    ],
+    "bestPracticesForSupervisors": [
+      [cite_start]"Emphasize safety and health training immediately[cite: 1296].",
+      [cite_start]"Provide a workplace orientation on the first day[cite: 1308].",
+      [cite_start]"Dedicate a mentor to guide the student and provide feedback[cite: 1303].",
+      [cite_start]"Explain workplace culture and expectations clearly[cite: 1300]."
+    ]
+  },
+  "competencyFramework": {
+    "source": "Postsecondary and Workforce Readiness (PWR) Act",
+    "employabilitySkills": [
+      [cite_start]"Communication (Verbal, Written, Digital) [cite: 97]",
+      [cite_start]"Teamwork & Conflict Resolution [cite: 97]",
+      [cite_start]"Problem Solving & Critical Thinking [cite: 97]",
+      [cite_start]"Professionalism (Reliability, Accountability, Time Management) [cite: 97]",
+      [cite_start]"Adaptability & Flexibility [cite: 97]",
+      [cite_start]"Cultural Competence [cite: 97]"
+    ],
+    "technicalCompetencyAreas": [
+      [cite_start]"Health Sciences & Technology [cite: 123]",
+      [cite_start]"Manufacturing, Engineering, Technology & Trades [cite: 110]",
+      [cite_start]"Finance & Business Services [cite: 117]",
+      [cite_start]"Information Technology [cite: 130]",
+      [cite_start]"Arts & Communications [cite: 137]",
+      [cite_start]"Human & Public Services (Education) [cite: 155]"
+    ]
+  },
+  "successStoriesAndModels": {
+    "model1": {
+      "partnerName": "Batavia Container",
+      "industry": "Manufacturing / Packaging",
+      "studentRoles": [
+        "Machine operator assistance",
+        "Material handling/forklift support",
+        "Quality assurance support",
+        "Lean manufacturing team assistance"
+      ],
+      [cite_start]"skillsDeveloped": "Lean manufacturing practices, equipment safety, quality control[cite: 1828].",
+      [cite_start]"logistics": "2-3 hours/week, PPE required[cite: 1832]."
+    },
+    "model2": {
+      "partnerName": "BHS Athletic Department",
+      "industry": "Sports Management / Education",
+      "studentRoles": [
+        "Event operations and logistics",
+        "Marketing and communication projects",
+        "Athletic scheduling support"
+      ],
+      [cite_start]"skillsDeveloped": "Event planning, marketing branding, administrative skills[cite: 1909].",
+      [cite_start]"logistics": "Flexible hours around events[cite: 1924]."
+    }
+  },
+  "legalAndCompliance": {
+    "studentRequirements": [
+      [cite_start]"Must be age 16+ for most Field Experience courses[cite: 1765].",
+      [cite_start]"Must adhere to safety protocols and confidentiality expectations[cite: 1925]."
+    ],
+    "employerConsiderations": [
+      [cite_start]"Child Labor Laws: Adhere to Illinois Child Labor Law of 2024 (820 ILCS 205)[cite: 1324].",
+      [cite_start]"Hazardous Occupations: Review restrictions for minors (e.g., power-driven machinery)[cite: 1326].",
+      [cite_start]"Insurance: Consult with insurance carriers regarding liability; students generally covered by student accident coverage[cite: 1340].",
+      [cite_start]"Training Agreements: A written training agreement/plan is required detailing tasks and responsibilities[cite: 1044]."
+    ]
+  },
+  "resources": {
+    "links": [
+      {
+        "title": "Illinois Work-Based Learning Manual",
+        "url": "isbe.net/CTE"
+      },
+      {
+        "title": "US Dept of Labor Internship Fact Sheet",
+        "url": "https://www.dol.gov/agencies/whd/fact-sheets/71-flsa-internships"
+      },
+      {
+        "title": "Batavia High School CTE Department",
+        "url": "https://bhs.bps101.net/"
+      }
+    ]
+  }
+}
