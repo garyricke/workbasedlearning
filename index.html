@@ -253,6 +253,17 @@
       animation: pulse-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
 
+    /* Ken Burns effect for hero */
+    @keyframes kenBurns {
+      0%   { transform: scale(1.0) translate(0%, 0%); }
+      50%  { transform: scale(1.08) translate(-1.5%, 1%); }
+      100% { transform: scale(1.05) translate(1.5%, -0.5%); }
+    }
+    .ken-burns {
+      animation: kenBurns 24s ease-in-out infinite alternate;
+      transform-origin: center center;
+    }
+
     /* Line clamp for video descriptions */
     .line-clamp-2 {
       display: -webkit-box;
@@ -340,7 +351,7 @@
         <a href="#partner-ways" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">How to Partner</a>
         <a href="#pathways" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">Career Clusters</a>
         <a href="#business" class="text-navy-600 hover:text-crimson-800 text-sm font-medium transition-colors">For Business</a>
-        <button onclick="openModal('partner-form')" class="bg-crimson-800 text-white px-6 py-2.5 text-sm font-semibold hover:bg-crimson-700 transition-colors">
+        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="bg-crimson-800 text-white px-6 py-2.5 text-sm font-semibold hover:bg-crimson-700 transition-colors">
           Partner With Us
         </button>
         <button onclick="openModal('inquiry-form')" class="border border-navy-200 text-navy-700 px-6 py-2.5 text-sm font-semibold hover:border-crimson-800 hover:text-crimson-800 transition-colors">
@@ -361,7 +372,7 @@
       <a href="#partner-ways" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">How to Partner</a>
       <a href="#pathways" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">Career Clusters</a>
       <a href="#business" class="block text-navy-700 text-sm font-medium py-2" onclick="toggleMobileMenu()">For Business</a>
-      <button onclick="openModal('partner-form'); toggleMobileMenu();" class="w-full bg-crimson-800 text-white px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors text-center">
+      <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank'); toggleMobileMenu();" class="w-full bg-crimson-800 text-white px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors text-center">
         Partner With Us
       </button>
     </div>
@@ -371,11 +382,11 @@
   <section class="min-h-screen relative flex items-center pt-20 overflow-hidden">
 
     <!-- Hero Background Image -->
-    <div class="absolute inset-0 -z-10">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
       <img
-        src="https://res.cloudinary.com/dsbllwpbh/image/upload/v1770320194/bhs-field-experiences-hero-student-classroom-work-trans_fbnbxe.jpg"
-        alt="BHS Field Experience student working"
-        class="w-full h-full object-cover object-center"
+        src="https://res.cloudinary.com/dsbllwpbh/image/upload/v1770345155/panel-business-partnership_zmkni5.jpg"
+        alt="BHS Work-Based Learning business partnership"
+        class="w-full h-full object-cover object-center ken-burns"
       />
     </div>
 
@@ -394,7 +405,7 @@
 
           <!-- Main headline -->
           <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-navy-900 mb-6 opacity-0 animate-in delay-1">
-            Mike Rules
+            Real Work.<br>Real Careers.<br><span class="text-crimson-800">Starting Now.</span>
           </h1>
 
           <!-- Subhead -->
@@ -405,7 +416,7 @@
 
           <!-- CTAs -->
           <div class="flex flex-col sm:flex-row gap-4 opacity-0 animate-in delay-3">
-            <button onclick="openModal('partner-form')" class="bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors text-center">
+            <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors text-center">
               Become a Partner
             </button>
             <a href="#partner-ways" class="border-2 border-navy-900 text-navy-900 px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-navy-900 hover:text-white transition-colors text-center">
@@ -1120,7 +1131,7 @@
             These aren't "soft skills"—they're the cross-sector competencies that every employer values, regardless of industry.
             Students develop and demonstrate these throughout their Work-Based Learning experiences.
           </p>
-          <button onclick="openModal('partner-form')" class="inline-flex items-center gap-3 bg-white text-crimson-800 px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-gold-500 hover:text-navy-900 transition-colors">
+          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-white text-crimson-800 px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-gold-500 hover:text-navy-900 transition-colors">
             <span>Partner With Us</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -1268,7 +1279,7 @@
             </div>
           </div>
 
-          <button onclick="openModal('partner-form')" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
             <span>Interested? Fill Out the Partner Form</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
@@ -1511,7 +1522,7 @@
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button onclick="openModal('partner-form')" class="bg-crimson-800 text-white px-10 py-5 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="bg-crimson-800 text-white px-10 py-5 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
           Fill Out the Partner Form
         </button>
         <button onclick="openModal('inquiry-form')" class="border-2 border-navy-900 text-navy-900 px-10 py-5 text-sm font-semibold uppercase tracking-wider hover:bg-navy-900 hover:text-white transition-colors">
@@ -1614,7 +1625,7 @@
           </div>
         </div>
 
-        <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
           <span>Sign Up to Host a Job Shadow</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
@@ -1673,7 +1684,7 @@
           </div>
         </div>
 
-        <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
           <span>Sign Up to Speak</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
@@ -1734,7 +1745,7 @@
 
         <p class="text-sm text-navy-500 mb-4">Students are motivated CTE or entrepreneurial students — prepared to receive feedback and present work professionally.</p>
 
-        <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
           <span>Sign Up to Mentor</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
@@ -1799,7 +1810,7 @@
 
         <p class="text-sm text-navy-500 mb-6">Students are responsible high school juniors and seniors interested in your field — receiving continuous coaching on professional practices and ready to contribute with guidance.</p>
 
-        <a href="https://forms.gle/LKtvgfaYBpTfWMSB9" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header" target="_blank" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
           <span>Host a Field Experience Student</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
