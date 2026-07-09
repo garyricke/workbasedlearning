@@ -1116,42 +1116,17 @@
       </div>
       <div id="partners-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-16 hidden"></div>
 
-      <!-- Partner Testimonials -->
+      <!-- Partner Testimonials (dynamic via Supabase) -->
       <div class="max-w-4xl mx-auto">
         <h3 class="font-heading text-xl font-bold text-navy-900 mb-8 text-center">What Our Partners Say</h3>
-        <div class="grid md:grid-cols-2 gap-8">
-
-          <!-- Testimonial placeholder 1 -->
-          <div class="bg-white p-8 rounded-lg border border-navy-100">
-            <svg class="w-8 h-8 text-gold-500 mb-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-            </svg>
-            <p class="text-navy-600 leading-relaxed italic mb-4">Partner testimonial coming soon — stories from businesses about how beneficial it was to host student interns.</p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-navy-100"></div>
-              <div>
-                <p class="font-heading font-bold text-navy-900 text-sm">Business Name</p>
-                <p class="text-navy-500 text-xs">Partner since 2026</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Testimonial placeholder 2 -->
-          <div class="bg-white p-8 rounded-lg border border-navy-100">
-            <svg class="w-8 h-8 text-gold-500 mb-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-            </svg>
-            <p class="text-navy-600 leading-relaxed italic mb-4">Partner testimonial coming soon — stories about the bright, motivated students who contributed real value.</p>
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-navy-100"></div>
-              <div>
-                <p class="font-heading font-bold text-navy-900 text-sm">Business Name</p>
-                <p class="text-navy-500 text-xs">Partner since 2026</p>
-              </div>
-            </div>
-          </div>
-
+        <div id="testimonials-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
+          <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          </svg>
+          <span class="text-sm font-heading font-medium">Loading testimonials...</span>
         </div>
+        <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
       </div>
 
     </div>
@@ -2996,6 +2971,69 @@
       <!-- Divider -->
       <hr class="border-navy-100">
 
+      <!-- Testimonials Management -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Testimonials</p>
+          <button onclick="toggleAddTestimonialForm()"
+            class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add New
+          </button>
+        </div>
+
+        <!-- Add testimonial form (collapsed) -->
+        <div id="add-testimonial-form-wrap" class="hidden mb-4">
+          <div class="bg-navy-50 rounded-xl p-4 border border-navy-100">
+            <p id="add-testimonial-form-title" class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest mb-3">New Testimonial</p>
+            <form id="add-testimonial-form" class="space-y-2.5" onsubmit="submitNewTestimonial(event)">
+              <input type="hidden" name="_edit_id" value="">
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Quote *</label>
+                <textarea name="quote" required rows="3" placeholder="Hosting a student intern was one of the best decisions we made this year..."
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Name / Business</label>
+                <input name="author_name" type="text" placeholder="Jane Smith, Orbis Design"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Subtitle <span class="text-navy-300 font-normal">(shown under the name)</span></label>
+                <input name="subtitle" type="text" placeholder="Partner since 2026"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Photo URL <span class="text-navy-300 font-normal">(optional)</span></label>
+                <input name="photo_url" type="url" placeholder="https://res.cloudinary.com/..."
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div id="add-testimonial-error" class="hidden text-xs text-crimson-800 font-heading font-semibold"></div>
+              <div class="flex gap-2">
+                <button type="submit" id="add-testimonial-submit"
+                  class="flex-1 bg-crimson-800 text-white text-xs font-heading font-bold py-2 rounded-lg hover:bg-crimson-700 transition-colors">
+                  Save Testimonial
+                </button>
+                <button type="button" onclick="toggleAddTestimonialForm()"
+                  class="px-4 text-xs font-heading font-semibold text-navy-500 hover:text-navy-900 border border-navy-200 rounded-lg transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Testimonials list -->
+        <div id="admin-testimonials-loading" class="text-xs text-navy-400 py-2">Loading...</div>
+        <div id="admin-testimonials-list" class="hidden space-y-2 max-h-48 overflow-y-auto"></div>
+        <div id="admin-testimonials-empty" class="hidden text-xs text-navy-300 italic py-2">No testimonials yet.</div>
+      </div>
+
+      <!-- Divider -->
+      <hr class="border-navy-100">
+
       <!-- Job Listings Management -->
       <div>
         <div class="flex items-center justify-between mb-3">
@@ -3273,6 +3311,200 @@
 
     function esc(s) {
       return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Testimonials: public ─────────────────────────────────────────────────
+
+    const DEFAULT_TESTIMONIALS = [
+      { quote: 'Partner testimonial coming soon — stories from businesses about how beneficial it was to host student interns.', author_name: 'Business Name', subtitle: 'Partner since 2026' },
+      { quote: 'Partner testimonial coming soon — stories about the bright, motivated students who contributed real value.', author_name: 'Business Name', subtitle: 'Partner since 2026' },
+    ];
+
+    async function loadTestimonials() {
+      const loading = document.getElementById('testimonials-loading');
+      const grid    = document.getElementById('testimonials-grid');
+
+      const { data, error } = await db
+        .from('testimonials')
+        .select('*')
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
+
+      if (loading) loading.classList.add('hidden');
+
+      const items = (!error && data && data.length) ? data : DEFAULT_TESTIMONIALS;
+      if (grid) {
+        grid.innerHTML = items.map(buildTestimonialCard).join('');
+        grid.classList.remove('hidden');
+      }
+    }
+
+    function buildTestimonialCard(t) {
+      const avatar = t.photo_url
+        ? `<img src="${esc(t.photo_url)}" alt="${esc(t.author_name || 'Partner')}" class="w-10 h-10 rounded-full object-cover">`
+        : `<div class="w-10 h-10 rounded-full bg-navy-100"></div>`;
+      return `
+        <div class="bg-white p-8 rounded-lg border border-navy-100">
+          <svg class="w-8 h-8 text-gold-500 mb-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          <p class="text-navy-600 leading-relaxed italic mb-4">${esc(t.quote)}</p>
+          <div class="flex items-center gap-3">
+            ${avatar}
+            <div>
+              <p class="font-heading font-bold text-navy-900 text-sm">${esc(t.author_name || 'Partner')}</p>
+              ${t.subtitle ? `<p class="text-navy-500 text-xs">${esc(t.subtitle)}</p>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // ── Testimonials admin ────────────────────────────────────────────────────
+
+    function toggleAddTestimonialForm() {
+      const wrap = document.getElementById('add-testimonial-form-wrap');
+      const isHidden = wrap.classList.toggle('hidden');
+      if (!isHidden) {
+        setTimeout(() => wrap.querySelector('textarea[name="quote"]').focus(), 50);
+      } else {
+        const form = document.getElementById('add-testimonial-form');
+        form.reset();
+        form.querySelector('input[name="_edit_id"]').value = '';
+        document.getElementById('add-testimonial-form-title').textContent = 'New Testimonial';
+        document.getElementById('add-testimonial-submit').textContent = 'Save Testimonial';
+      }
+    }
+
+    async function loadAdminTestimonials() {
+      const loading = document.getElementById('admin-testimonials-loading');
+      const list    = document.getElementById('admin-testimonials-list');
+      const empty   = document.getElementById('admin-testimonials-empty');
+
+      if (loading) loading.classList.remove('hidden');
+      if (list) list.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
+
+      const { data, error } = await db
+        .from('testimonials')
+        .select('id, quote, author_name, subtitle, is_active, created_at')
+        .order('created_at', { ascending: false });
+
+      if (loading) loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (list) {
+        list.classList.remove('hidden');
+        list.innerHTML = data.map(buildAdminTestimonialItem).join('');
+      }
+    }
+
+    function buildAdminTestimonialItem(t) {
+      const eyeOn  = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      const eyeOff = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>';
+      const safeQuote = esc((t.quote || '').slice(0, 40)).replace(/'/g, "\\'");
+      return `
+        <div class="border border-navy-100 rounded-lg p-3 ${t.is_active ? '' : 'opacity-50'}">
+          <div class="flex items-start justify-between gap-2 mb-1">
+            <div class="min-w-0 flex-1">
+              <p class="font-heading font-bold text-navy-900 text-xs truncate">${esc(t.author_name || 'Untitled')}</p>
+              <p class="text-xs text-navy-400 truncate italic">${esc((t.quote || '').slice(0, 60))}${(t.quote || '').length > 60 ? '…' : ''}</p>
+            </div>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editTestimonial('${t.id}')"
+                title="Edit testimonial"
+                class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button onclick="toggleTestimonialActive('${t.id}', ${t.is_active})"
+                title="${t.is_active ? 'Hide from site' : 'Show on site'}"
+                class="w-7 h-7 rounded flex items-center justify-center transition-colors ${t.is_active ? 'bg-green-50 text-green-600 hover:bg-green-100' : 'bg-navy-100 text-navy-400 hover:bg-navy-200'}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">${t.is_active ? eyeOn : eyeOff}</svg>
+              </button>
+              <button onclick="deleteTestimonial('${t.id}', '${safeQuote}')"
+                title="Delete testimonial"
+                class="w-7 h-7 rounded bg-crimson-50 text-crimson-800 hover:bg-crimson-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <span class="text-xs font-heading font-semibold ${t.is_active ? 'text-green-600' : 'text-navy-400'}">
+            ${t.is_active ? '● Live' : '○ Hidden'}
+          </span>
+        </div>`;
+    }
+
+    async function editTestimonial(id) {
+      const { data, error } = await db.from('testimonials').select('*').eq('id', id).single();
+      if (error || !data) return;
+      const form = document.getElementById('add-testimonial-form');
+      const wrap = document.getElementById('add-testimonial-form-wrap');
+      Object.keys(data).forEach(k => {
+        const el = form.elements[k];
+        if (el) el.value = data[k] ?? '';
+      });
+      form.querySelector('input[name="_edit_id"]').value = id;
+      document.getElementById('add-testimonial-form-title').textContent = 'Edit Testimonial';
+      document.getElementById('add-testimonial-submit').textContent = 'Update Testimonial';
+      wrap.classList.remove('hidden');
+      setTimeout(() => form.querySelector('textarea[name="quote"]').focus(), 50);
+    }
+
+    async function submitNewTestimonial(e) {
+      e.preventDefault();
+      const form   = e.target;
+      const btn    = document.getElementById('add-testimonial-submit');
+      const errEl  = document.getElementById('add-testimonial-error');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errEl.classList.add('hidden');
+
+      const raw = Object.fromEntries(new FormData(form));
+      const editId = raw._edit_id;
+      delete raw._edit_id;
+      Object.keys(raw).forEach(k => { if (raw[k] === '' || raw[k] === null) delete raw[k]; });
+
+      const { error } = editId
+        ? await db.from('testimonials').update(raw).eq('id', editId)
+        : await db.from('testimonials').insert([raw]);
+
+      if (error) {
+        errEl.textContent = 'Error: ' + error.message;
+        errEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = editId ? 'Update Testimonial' : 'Save Testimonial';
+        return;
+      }
+
+      form.reset();
+      form.querySelector('input[name="_edit_id"]').value = '';
+      document.getElementById('add-testimonial-form-title').textContent = 'New Testimonial';
+      toggleAddTestimonialForm();
+      loadAdminTestimonials();
+      loadTestimonials();
+      btn.disabled = false;
+      btn.textContent = 'Save Testimonial';
+    }
+
+    async function toggleTestimonialActive(id, current) {
+      await db.from('testimonials').update({ is_active: !current }).eq('id', id);
+      loadAdminTestimonials();
+      loadTestimonials();
+    }
+
+    async function deleteTestimonial(id, preview) {
+      if (!confirm('Delete testimonial "' + preview + '..."? This cannot be undone.')) return;
+      await db.from('testimonials').delete().eq('id', id);
+      loadAdminTestimonials();
+      loadTestimonials();
     }
 
     // ── Public: load and render active listings ──────────────────────────────
@@ -4011,8 +4243,9 @@
       loadAdminListings();
     }
 
-    // Load partner grid on page load
+    // Load partner grid and testimonials on page load
     loadPartners();
+    loadTestimonials();
 
     // Reload admin panels every time the hub opens
     (function() {
@@ -4021,6 +4254,7 @@
         if (_orig) _orig();
         loadAdminPartners();
         loadAdminListings();
+        loadAdminTestimonials();
       };
     })();
   </script>
