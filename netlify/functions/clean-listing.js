@@ -47,7 +47,7 @@ Return ONLY valid JSON with the same field names, every value a string. No markd
 
   const requestBody = JSON.stringify({
     contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.55, maxOutputTokens: 4096, responseMimeType: 'application/json' }
+    generationConfig: { temperature: 0.55, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } }
   });
 
   // Try as API key first, then as Bearer token (handles both AIzaSy... and AQ... formats)
