@@ -10,11 +10,13 @@ exports.handler = async (event) => {
 
   const TEXT_FIELDS = ['mission_statement','role_title','tasks','top_skills','student_requirements','specific_requirements','ideal_candidate','application_instructions','other_info'];
 
-  let input;
+  let input, context;
   try {
     const body = JSON.parse(event.body || '{}');
     input = {};
     TEXT_FIELDS.forEach(k => { if (body[k]) input[k] = body[k]; });
+    context = {};
+    ['company_name','industry','work_environment','compensation','weekly_commitment'].forEach(k => { if (body[k]) context[k] = body[k]; });
   } catch {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON body' }) };
   }
@@ -23,31 +25,65 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: '{}' };
   }
 
-  const prompt = `You are a professional copywriter turning rough, informal notes from a local business partner into a polished, compelling one-page job description for a high school Work-Based Learning program. Students will read this to decide whether to apply, so it needs to sound genuinely exciting and professional — not like raw meeting notes or a transcript.
+  const prompt = `You are a sharp, knowledgeable copywriter writing student-facing job descriptions for a high school Work-Based Learning program. Your job is to turn rough input from a local business into polished, compelling copy that makes students want to apply.
 
-Rules:
-- Rewrite everything in clear, confident, professional language. Assume the input is rough draft material (typos, filler words, run-on thoughts, transcript-style phrasing) that needs a real rewrite, not just a light edit.
-- "role_title": punchy, professional Title Case (e.g. "Marketing & Social Media Intern")
-- "mission_statement": a polished, inviting 1–2 sentence paragraph capturing what the business does and why it matters — professional but warm
-- "tasks": rewrite as parallel gerund-phrase bullets (e.g. "- Designing social media graphics for Instagram and TikTok campaigns"), one concrete idea per line, each starting with "- ". Merge fragments and drop stray punctuation.
-- "top_skills": concise, punchy noun-phrase bullets, one per line starting with "- "
-- "ideal_candidate": 2–3 clear, encouraging sentences describing the right student, written so a student reading it thinks "that's me" — never transcript-style or rambling
-- "student_requirements" / "specific_requirements": clean, plain-language phrasing, fix grammar
-- "application_instructions": clear, encouraging, professional sentences
-- "other_info": fix grammar and punctuation, tighten wording
-- Fix all grammar, spelling, and capitalization issues throughout (e.g. "libray" -> "library", "spedific" -> "specific")
-- Do NOT invent new facts, tasks, skills, or requirements that aren't implied by the input
-- Do NOT alter company names, email addresses, URLs, dollar amounts, or specific times/dates
-- Every field value must be a single STRING, never a JSON array — for "tasks" and "top_skills", join the bullet lines into one string separated by literal newline characters ("\\n")
+You have general knowledge of businesses and industries — use it. If someone types "help with repairs," you know what that work actually looks like in this type of business and you can make it specific and exciting. You are not just a grammar fixer; you're a copywriter who understands the work.
 
-Input:
+Business context (do not modify — use only to inform your writing):
+${JSON.stringify(context, null, 2)}
+
+Fields to rewrite:
 ${JSON.stringify(input, null, 2)}
 
-Return ONLY valid JSON with the same field names, every value a string. No markdown, no explanation.`;
+Rules for each field:
+
+"role_title"
+- Professional Title Case
+- Specific and punchy — say what the work actually is (e.g. "Plumbing & HVAC Installation Intern", not just "Plumbing Intern")
+
+"mission_statement"
+- EXACTLY ONE sentence. Hard maximum: 25 words.
+- State what this business does and the real-world impact it has — specific and confident
+- No filler openers like "dedicated to", "committed to excellence", or "striving to"
+- Strong example: "Bulldog Plumbing keeps Batavia homes and businesses running with expert residential and commercial plumbing services."
+
+"tasks"
+- Parallel gerund-phrase bullets, each starting with "- ", one per line
+- Draw on your knowledge of this industry to make tasks specific and vivid — describe what the work actually looks like day-to-day, not just what the input says
+- Each bullet should help a student picture themselves doing something real and concrete
+- Join all bullets into a single string using literal newline characters
+
+"top_skills"
+- Punchy noun-phrase bullets, each starting with "- ", one per line
+- Name skills this student will actually build doing this work — specific to the trade or field, not generic buzzwords
+- Join all bullets into a single string using literal newline characters
+
+"ideal_candidate"
+- 2–3 sentences maximum
+- Written for a high school student — encouraging and specific, makes them think "that sounds like me"
+- Mention the mindset or traits that fit this type of work (hands-on, curious, reliable, etc.)
+
+"student_requirements" / "specific_requirements"
+- Clean, plain-language sentences. Fix grammar and typos.
+
+"application_instructions"
+- Clear, warm, encouraging. 1–3 sentences.
+
+"other_info"
+- Tighten grammar and wording.
+
+Hard rules:
+- Do NOT change company names, email addresses, URLs, dollar amounts, or specific times/dates
+- Do NOT invent specific verifiable facts: named clients, certifications, years in business, specific locations not in the input
+- You MAY use general industry knowledge to make descriptions more specific and vivid
+- Fix all spelling and capitalization errors
+- Every field value must be a single STRING — for "tasks" and "top_skills" join bullets with literal newline ("\\n")
+
+Return ONLY valid JSON with these exact field names: ${TEXT_FIELDS.join(', ')}. No markdown fences, no explanation, nothing else.`;
 
   const requestBody = JSON.stringify({
     contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.55, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } }
+    generationConfig: { temperature: 0.7, maxOutputTokens: 4096, responseMimeType: 'application/json', thinkingConfig: { thinkingBudget: 0 } }
   });
 
   // Try as API key first, then as Bearer token (handles both AIzaSy... and AQ... formats)

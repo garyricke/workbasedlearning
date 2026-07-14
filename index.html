@@ -4275,6 +4275,10 @@
       TEXT_FIELDS.forEach(k => { if (raw[k]) input[k] = raw[k]; });
       if (!Object.keys(input).length) return {};
 
+      // Include context fields so AI knows the business name, industry, etc.
+      const CONTEXT_FIELDS = ['company_name','industry','work_environment','compensation','weekly_commitment'];
+      CONTEXT_FIELDS.forEach(k => { if (raw[k]) input[k] = raw[k]; });
+
       const res = await fetch('/.netlify/functions/clean-listing', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
