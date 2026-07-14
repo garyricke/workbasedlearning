@@ -3077,6 +3077,10 @@
         <div class="flex items-center justify-between mb-3">
           <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Job Listings</p>
           <div class="flex items-center gap-3">
+            <button id="reclean-all-btn" onclick="reCleanAllListings()"
+              class="text-xs font-heading font-bold text-amber-600 hover:text-amber-700 transition-colors">
+              ✨ Re-clean All
+            </button>
             <button id="normalize-all-btn" onclick="normalizeAllListings()"
               class="text-xs font-heading font-bold text-navy-400 hover:text-navy-600 transition-colors">
               Normalize All
@@ -3951,6 +3955,11 @@
               <p class="text-xs text-navy-400 truncate">${esc(listing.company_name)}</p>
             </div>
             <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="reCleanListing('${listing.id}', this)"
+                title="Re-clean with AI"
+                class="w-7 h-7 rounded bg-amber-50 text-amber-600 hover:bg-amber-100 flex items-center justify-center transition-colors text-sm leading-none">
+                ✨
+              </button>
               <button onclick="editListing('${listing.id}')"
                 title="Edit listing"
                 class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
@@ -4175,6 +4184,67 @@
       }
       btn.disabled = false; btn.textContent = 'Normalize All';
       alert(`Done — normalized ${updated} listing${updated !== 1 ? 's' : ''}.`);
+      loadAdminListings();
+    }
+
+    async function reCleanListing(id, btn) {
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = '…';
+      const { data, error } = await db.from('job_listings').select('*').eq('id', id).single();
+      if (error || !data) {
+        btn.disabled = false; btn.innerHTML = orig;
+        alert('Could not load listing.');
+        return;
+      }
+      let cleaned;
+      try {
+        cleaned = await cleanListingWithAI(data);
+      } catch (err) {
+        btn.disabled = false; btn.innerHTML = orig;
+        alert('AI cleanup failed: ' + err.message);
+        return;
+      }
+      btn.disabled = false; btn.innerHTML = orig;
+      const TEXT_FIELDS = ['mission_statement','role_title','tasks','top_skills','student_requirements','specific_requirements','ideal_candidate','application_instructions','other_info'];
+      const changed = Object.keys(cleaned).filter(k => cleaned[k] && cleaned[k] !== data[k]);
+      if (!changed.length) { alert('No changes — listing already looks clean.'); return; }
+      showAIPreviewModal(data, cleaned, async (approved) => {
+        const updates = {};
+        TEXT_FIELDS.forEach(k => { if (approved[k]) updates[k] = approved[k]; });
+        const { error: saveErr } = await db.from('job_listings').update(updates).eq('id', id);
+        if (saveErr) { alert('Save failed: ' + saveErr.message); return; }
+        loadAdminListings();
+      });
+    }
+
+    async function reCleanAllListings() {
+      if (!confirm('Re-run AI cleanup on ALL listings? Changes will be saved automatically without a preview.')) return;
+      const btn = document.getElementById('reclean-all-btn');
+      btn.disabled = true;
+      const { data, error } = await db.from('job_listings').select('*').order('company_name', { ascending: true });
+      if (error || !data) {
+        btn.disabled = false; btn.textContent = '✨ Re-clean All';
+        alert('Could not load listings.');
+        return;
+      }
+      const TEXT_FIELDS = ['mission_statement','role_title','tasks','top_skills','student_requirements','specific_requirements','ideal_candidate','application_instructions','other_info'];
+      let updated = 0, failed = 0;
+      for (let i = 0; i < data.length; i++) {
+        btn.textContent = `Cleaning ${i + 1}/${data.length}…`;
+        const row = data[i];
+        try {
+          const cleaned = await cleanListingWithAI(row);
+          const updates = {};
+          TEXT_FIELDS.forEach(k => { if (cleaned[k] && cleaned[k] !== row[k]) updates[k] = cleaned[k]; });
+          if (Object.keys(updates).length) {
+            const { error: saveErr } = await db.from('job_listings').update(updates).eq('id', row.id);
+            if (!saveErr) updated++;
+          }
+        } catch { failed++; }
+      }
+      btn.disabled = false; btn.textContent = '✨ Re-clean All';
+      alert(`Done — updated ${updated} listing${updated !== 1 ? 's' : ''}${failed ? `, ${failed} failed` : ''}.`);
       loadAdminListings();
     }
 
