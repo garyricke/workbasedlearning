@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Legal Pathway — BHS Field Experience</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --crimson:#AC161D;
+    --crimson-dark:#7d0f14;
+    --navy:#0B1220;
+    --gold:#FBCD07;
+    --paper:#FFFDF7;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Open Sans', Arial, sans-serif;
+    color:var(--navy);
+    background:#e9e9e9;
+  }
+  .page{
+    width:8.5in;
+    min-height:11in;
+    margin:0.4in auto;
+    background:var(--paper);
+    box-shadow:0 0 20px rgba(0,0,0,0.25);
+    padding:0.45in 0.55in;
+    position:relative;
+    overflow:hidden;
+  }
+  .topbar{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:10px;
+    background:linear-gradient(90deg,var(--crimson) 0%,var(--crimson) 60%,var(--gold) 60%,var(--gold) 100%);
+  }
+
+  /* ---- toolbar (screen only) ---- */
+  .toolbar{
+    max-width:8.5in;
+    margin:18px auto 0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:var(--navy);
+    color:#fff;
+    padding:12px 16px;
+    border-radius:6px;
+  }
+  .toolbar .label{font-size:12px;color:rgba(255,255,255,.72);line-height:1.4;}
+  .toolbar .btn-group{display:flex;gap:8px;flex-shrink:0;}
+  .toolbar button{
+    font-family:'Montserrat',sans-serif;font-weight:700;font-size:12px;
+    background:var(--gold);color:var(--navy);border:none;padding:10px 16px;
+    border-radius:4px;cursor:pointer;white-space:nowrap;
+  }
+  .toolbar button:hover{background:#fff;}
+  .toolbar button.copied{background:#31c06a;color:#fff;}
+
+  header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding-top:14px;
+    border-bottom:3px solid var(--navy);
+    padding-bottom:16px;
+  }
+  header img{
+    width:92px;
+    height:92px;
+    object-fit:contain;
+    flex-shrink:0;
+  }
+  header .htext{flex:1;}
+  header .eyebrow{
+    font-family:'Montserrat',sans-serif;
+    font-weight:700;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--crimson);
+    margin:0 0 4px 0;
+  }
+  header h1{
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    font-size:33px;
+    line-height:1.05;
+    margin:0 0 6px 0;
+    letter-spacing:-0.6px;
+  }
+  header p{
+    margin:0;
+    font-size:14px;
+    color:#333;
+    font-weight:600;
+  }
+
+  .lede{
+    margin:16px 0 18px 0;
+    font-size:14.2px;
+    line-height:1.5;
+    color:#222;
+  }
+  .lede strong{color:var(--crimson);}
+
+  .section-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:12.5px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--navy);
+    margin:0 0 9px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-title::after{
+    content:"";
+    flex:1;
+    height:2px;
+    background:var(--gold);
+  }
+
+  .snapshot{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-bottom:18px;
+  }
+  .snapshot .stat{
+    background:var(--navy);
+    color:#fff;
+    border-radius:6px;
+    padding:11px 8px;
+    text-align:center;
+  }
+  .snapshot .stat .num{
+    font-family:'Montserrat',sans-serif;
+    font-weight:900;
+    font-size:17px;
+    display:block;
+    line-height:1.1;
+    color:var(--gold);
+  }
+  .snapshot .stat .label{
+    display:block;
+    font-size:9.5px;
+    line-height:1.25;
+    margin-top:4px;
+    color:rgba(255,255,255,.82);
+    font-weight:600;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1.12fr 1fr;
+    gap:22px;
+    margin-bottom:18px;
+  }
+  ul.check{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+  ul.check li{
+    position:relative;
+    padding-left:19px;
+    font-size:12.4px;
+    line-height:1.42;
+    margin-bottom:7px;
+    color:#262626;
+  }
+  ul.check li::before{
+    content:"";
+    position:absolute;
+    left:0; top:5px;
+    width:9px; height:9px;
+    background:var(--gold);
+    border-radius:2px;
+  }
+  ul.check li b{color:var(--navy);}
+
+  .conf-box{
+    background:#fff;
+    border:2px solid var(--navy);
+    border-left:7px solid var(--crimson);
+    border-radius:5px;
+    padding:12px 14px;
+  }
+  .conf-box .cb-title{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:12px;
+    color:var(--crimson);
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:7px;
+  }
+  .conf-box ul{margin:0;padding-left:15px;}
+  .conf-box li{
+    font-size:11.6px;
+    line-height:1.4;
+    margin-bottom:6px;
+    color:#2a2a2a;
+  }
+  .conf-box li:last-child{margin-bottom:0;}
+  .conf-box li b{color:var(--navy);}
+
+  .careers{
+    background:#fff;
+    border:1px solid #ddd9cd;
+    border-radius:5px;
+    padding:11px 13px;
+    margin-bottom:17px;
+  }
+  .careers .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+  }
+  .careers .chip{
+    font-size:10.5px;
+    font-weight:600;
+    background:#f2efe4;
+    border:1px solid #e0dbc9;
+    border-radius:20px;
+    padding:3.5px 9px;
+    color:#333;
+  }
+  .careers .chip.hi{
+    background:var(--navy);
+    color:#fff;
+    border-color:var(--navy);
+  }
+  .careers .cap{
+    font-size:10.8px;
+    color:#666;
+    margin:8px 0 0 0;
+    line-height:1.4;
+    font-style:italic;
+  }
+
+  .also-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-bottom:18px;
+  }
+  .also-card{
+    border:1px solid #ded9c9;
+    border-top:4px solid var(--gold);
+    border-radius:5px;
+    padding:9px 10px;
+    background:#fff;
+  }
+  .also-card h4{
+    font-family:'Montserrat',sans-serif;
+    font-size:11.5px;
+    font-weight:800;
+    margin:0 0 4px 0;
+    color:var(--navy);
+  }
+  .also-card p{
+    margin:0;
+    font-size:10.4px;
+    line-height:1.38;
+    color:#555;
+  }
+
+  .cta{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--navy);
+    border-radius:7px;
+    padding:14px 16px;
+    margin-bottom:14px;
+  }
+  .cta .qr{
+    background:#fff;
+    padding:6px;
+    border-radius:5px;
+    flex-shrink:0;
+    line-height:0;
+  }
+  .cta .qr img{width:78px;height:78px;display:block;}
+  .cta .ctext{flex:1;color:#fff;}
+  .cta .tag{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:15px;
+    color:var(--gold);
+    margin:0 0 5px 0;
+  }
+  .cta .ctext p{
+    margin:0;
+    font-size:11.8px;
+    line-height:1.45;
+    color:rgba(255,255,255,.85);
+  }
+  .cta .links{
+    margin-top:7px;
+    font-size:11.5px;
+    font-weight:700;
+    display:flex;
+    gap:9px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .cta .links a{color:var(--gold);text-decoration:none;}
+  .cta .links span{color:rgba(255,255,255,.35);}
+
+  .coordinators{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    border-top:2px solid var(--navy);
+    padding-top:11px;
+  }
+  .coord .name{
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    color:var(--navy);
+  }
+  .coord .role{
+    font-size:10.6px;
+    color:#666;
+    margin:1px 0 3px 0;
+    font-weight:600;
+  }
+  .coord a{
+    font-size:11.2px;
+    color:var(--crimson);
+    text-decoration:none;
+    font-weight:600;
+  }
+
+  .footer-tag{
+    text-align:center;
+    font-family:'Montserrat',sans-serif;
+    font-weight:800;
+    font-size:11.5px;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--crimson);
+    margin:12px 0 0 0;
+  }
+
+  @media print{
+    body{background:#fff;}
+    .toolbar{display:none;}
+    .page{margin:0;box-shadow:none;width:auto;min-height:0;}
+    @page{size:letter;margin:0.3in;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="label">Copy pastes this as a picture into an email body. Download PDF gives you a proper attachment to send instead.</span>
+  <div class="btn-group">
+    <button id="copyBtn">Copy Handout as Image</button>
+    <button id="pdfBtn">Download as PDF</button>
+  </div>
+</div>
+
+<div class="page">
+  <div class="topbar"></div>
+
+  <header>
+    <img src="https://res.cloudinary.com/dsbllwpbh/image/upload/v1770990807/field-study-logo-trans_kewube.png" alt="BHS Field Experience" crossorigin="anonymous">
+    <div class="htext">
+      <p class="eyebrow">Batavia High School &middot; Work-Based Learning</p>
+      <h1>The Legal Pathway</h1>
+      <p>Exploring &mdash; and developing &mdash; the next generation of legal professionals</p>
+    </div>
+  </header>
+
+  <p class="lede">
+    Ask a high school student what a lawyer does and you'll hear a courtroom scene from television. The students who
+    know better are almost always the ones whose parents already practice. <strong>Field Experience</strong> exists to
+    close that gap &mdash; and law is the hardest field for us to open, because confidentiality makes attorneys
+    understandably cautious. <strong>This page is our answer to that.</strong>
+  </p>
+
+  <div class="snapshot">
+    <div class="stat"><span class="num">1</span><span class="label">Semester Placement</span></div>
+    <div class="stat"><span class="num">60+</span><span class="label">Supervised Hours Minimum</span></div>
+    <div class="stat"><span class="num">Signed</span><span class="label">Confidentiality Agreement</span></div>
+    <div class="stat"><span class="num">You</span><span class="label">Define the Scope</span></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-title">What a Placement Can Look Like</p>
+      <ul class="check">
+        <li><b>Observing open court proceedings</b> &mdash; public record, zero privilege concern, and the single most clarifying day a student can have.</li>
+        <li><b>Shadowing a paralegal or legal assistant</b> &mdash; often the best entry point, and it shows students the careers that don't require law school.</li>
+        <li><b>Non-privileged document and file work</b> &mdash; organization, indexing, exhibit prep, closing packets, all under supervision.</li>
+        <li><b>Learning the business of a practice</b> &mdash; intake flow, billing, calendaring, client communication, how a firm actually stays open.</li>
+        <li><b>Intro legal research</b> &mdash; public case law and statutes, with a real professional explaining how the reasoning works.</li>
+        <li><b>Sitting in on closings, depositions, or client meetings</b> &mdash; only where you and your client choose to allow it.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="section-title">On Confidentiality</p>
+      <div class="conf-box">
+        <div class="cb-title">The concern is legitimate. Here's our answer.</div>
+        <ul>
+          <li><b>Every student signs a written confidentiality agreement</b> before day one &mdash; reviewed with the student and their parent or guardian, not just handed over.</li>
+          <li><b>You draw the line, and we write it down.</b> Many legal placements involve no client file access at all. That is a completely acceptable placement.</li>
+          <li><b>We know Rule 5.3 puts responsibility on you.</b> Our job is to keep that responsibility small, bounded, and documented &mdash; not to hand you a liability.</li>
+          <li><b>You can end it at any time, for any reason.</b> No explanation owed, no awkwardness. We would rather you stop than stay in something that isn't working.</li>
+          <li><b>You meet the student before day one.</b> If the fit feels wrong then, we place them elsewhere and nobody is offended.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <p class="section-title">The Pathway Is Bigger Than "Lawyer"</p>
+  <div class="careers">
+    <div class="chips">
+      <span class="chip hi">Attorney</span>
+      <span class="chip hi">Paralegal</span>
+      <span class="chip">Legal Assistant</span>
+      <span class="chip">Court Reporter</span>
+      <span class="chip">Circuit Clerk</span>
+      <span class="chip">Title Examiner</span>
+      <span class="chip">Compliance Officer</span>
+      <span class="chip">Contract Manager</span>
+      <span class="chip">Mediator</span>
+      <span class="chip">Victim Advocate</span>
+      <span class="chip">Probation Officer</span>
+      <span class="chip">Legal Operations</span>
+      <span class="chip">Judge</span>
+      <span class="chip">Court Administrator</span>
+      <span class="chip">Investigator</span>
+      <span class="chip">Policy Analyst</span>
+    </div>
+    <p class="cap">Most students only know the first one. Half of these are strong, stable careers reachable without law school &mdash; and a student can't choose a path they've never heard of.</p>
+  </div>
+
+  <p class="section-title">Not Ready for a Semester? Four Smaller Ways to Help</p>
+  <div class="also-row">
+    <div class="also-card">
+      <h4>Job Shadow</h4>
+      <p>One morning. Court call, closings, whatever your day holds.</p>
+    </div>
+    <div class="also-card">
+      <h4>Guest Speaker</h4>
+      <p>One hour. How you got here and what you actually do all day.</p>
+    </div>
+    <div class="also-card">
+      <h4>Mock Interview</h4>
+      <p>Twenty minutes of honest feedback on a student panel at BHS.</p>
+    </div>
+    <div class="also-card">
+      <h4>Mentor / Advisor</h4>
+      <p>Occasional guidance and project feedback, on your schedule.</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=https://forms.gle/LKtvgfaYBpTfWMSB9" alt="QR code to partner interest form" crossorigin="anonymous">
+    </div>
+    <div class="ctext">
+      <p class="tag">One student. One semester. One door opened.</p>
+      <p>Scan the code or use the link below to tell us how you'd like to be involved &mdash; it takes two minutes,
+         and it is not a commitment. We'll follow up within two school days, and a fifteen-minute conversation
+         costs you nothing.</p>
+      <div class="links">
+        <a href="https://forms.gle/LKtvgfaYBpTfWMSB9">forms.gle/LKtvgfaYBpTfWMSB9</a>
+        <span>|</span>
+        <a href="https://workbasedlearningbps101.net">workbasedlearningbps101.net</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="coordinators">
+    <div class="coord">
+      <div class="name">Michael Theriault</div>
+      <div class="role">Work-Based Learning Coordinator</div>
+      <a href="mailto:michael.theriault@bps101.net">michael.theriault@bps101.net</a> &middot; (630) 800-8284
+    </div>
+    <div class="coord">
+      <div class="name">Austun Savitski</div>
+      <div class="role">Work-Based Learning Coordinator</div>
+      <a href="mailto:austun.savitski@bps101.net">austun.savitski@bps101.net</a> &middot; (630) 373-4956
+    </div>
+  </div>
+
+  <p class="footer-tag">Partner Today. Build Tomorrow. &mdash; Batavia Bulldogs BPS101</p>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  const btn = document.getElementById('copyBtn');
+  const defaultLabel = 'Copy Handout as Image';
+
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    btn.textContent = 'Copying…';
+    try {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+      const target = document.querySelector('.page');
+      const canvas = await html2canvas(target, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#FFFDF7'
+      });
+      await new Promise((resolve, reject) => {
+        canvas.toBlob(async (blob) => {
+          if (!blob) { reject(new Error('No image produced')); return; }
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ 'image/png': blob })
+            ]);
+            resolve();
+          } catch (clipErr) {
+            // Fallback: open the image in a new tab so it can be copied/saved manually
+            const url = URL.createObjectURL(blob);
+            window.open(url, '_blank');
+            resolve();
+          }
+        }, 'image/png');
+      });
+      btn.textContent = 'Copied ✓ — paste into email';
+      btn.classList.add('copied');
+    } catch (err) {
+      btn.textContent = 'Copy failed — try again';
+      console.error(err);
+    }
+    btn.disabled = false;
+    setTimeout(() => {
+      btn.textContent = defaultLabel;
+      btn.classList.remove('copied');
+    }, 1800);
+  });
+
+  const pdfBtn = document.getElementById('pdfBtn');
+  const pdfDefaultLabel = 'Download as PDF';
+
+  pdfBtn.addEventListener('click', async () => {
+    pdfBtn.disabled = true;
+    pdfBtn.textContent = 'Building PDF…';
+    try {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+      const target = document.querySelector('.page');
+      const canvas = await html2canvas(target, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#FFFDF7'
+      });
+      const imgData = canvas.toDataURL('image/jpeg', 0.98);
+
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'in', format: 'letter', orientation: 'portrait' });
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      // Fit the whole handout onto one page, shrinking to fit if it runs slightly
+      // taller than a letter page rather than spilling onto a second page.
+      const contentWidthIn = target.offsetWidth / 96;
+      const contentHeightIn = target.offsetHeight / 96;
+      const fitScale = Math.min(pageWidth / contentWidthIn, pageHeight / contentHeightIn, 1);
+      const drawWidth = contentWidthIn * fitScale;
+      const drawHeight = contentHeightIn * fitScale;
+      const offsetX = (pageWidth - drawWidth) / 2;
+      const offsetY = (pageHeight - drawHeight) / 2;
+
+      pdf.addImage(imgData, 'JPEG', offsetX, offsetY, drawWidth, drawHeight);
+      pdf.save('BHS Field Experience - Legal Pathway.pdf');
+      pdfBtn.textContent = 'Downloaded ✓';
+      pdfBtn.classList.add('copied');
+    } catch (err) {
+      pdfBtn.textContent = 'PDF failed — try again';
+      console.error(err);
+    }
+    pdfBtn.disabled = false;
+    setTimeout(() => {
+      pdfBtn.textContent = pdfDefaultLabel;
+      pdfBtn.classList.remove('copied');
+    }, 1800);
+  });
+</script>
+
+</body>
+</html>
