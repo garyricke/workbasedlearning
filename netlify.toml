@@ -1,2 +1,6 @@
-[functions]
-  timeout = 26
+# Function timeout is NOT configurable here. Netlify reads `functions.<name>`
+# as a per-function config table, so a bare `timeout = 26` under [functions]
+# is a config parse error that fails the build before it starts — which it
+# did silently from 2026-07-14 until 2026-08-07, blocking every deploy in
+# between. Set the function timeout in the Netlify UI instead:
+# Site settings -> Functions -> Function timeout (clean-listing needs ~26s).
