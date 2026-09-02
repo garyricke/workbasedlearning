@@ -1041,34 +1041,34 @@
   </section>
 
   <!-- Field Experience Partner Wall (semester showcase) -->
-  <section id="partner-wall" class="py-24 md:py-32 px-6 md:px-8 bg-white">
+  <section id="partner-wall" class="py-24 md:py-32 px-6 md:px-8 bg-gradient-to-br from-[#0B1220] via-[#1a0508] to-[#3a0b10]">
     <div class="max-w-6xl mx-auto">
 
       <div class="text-center mb-10">
-        <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Field Experience</p>
-        <h2 id="partner-wall-heading" class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
+        <p class="text-sm uppercase tracking-widest text-gold-500 font-semibold mb-4">Field Experience</p>
+        <h2 id="partner-wall-heading" class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white mb-4">
           Partner Wall
         </h2>
 
-        <div id="partner-wall-tabs" class="hidden inline-flex rounded-lg border border-navy-200 p-1 mb-4">
+        <div id="partner-wall-tabs" class="hidden inline-flex rounded-lg border border-white/20 p-1 mb-4">
           <button type="button" id="partner-wall-tab-partner" onclick="switchPartnerWallCategory('partner')"
-            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors">
+            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors text-white/60">
             Business Partners
           </button>
           <button type="button" id="partner-wall-tab-self_enterprise" onclick="switchPartnerWallCategory('self_enterprise')"
-            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors">
+            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors text-white/60">
             Self Enterprise
           </button>
         </div>
 
         <div id="partner-wall-picker-wrap" class="hidden flex items-center justify-center gap-2 mt-2">
-          <label class="text-xs font-heading font-semibold text-navy-500 uppercase tracking-widest">Semester</label>
+          <label class="text-xs font-heading font-semibold text-white/50 uppercase tracking-widest">Semester</label>
           <select id="partner-wall-picker" onchange="loadPartnerWallSemester(this.value)"
-            class="border border-navy-200 rounded-lg px-3 py-1.5 text-sm font-body focus:outline-none focus:border-crimson-800"></select>
+            class="border border-white/30 rounded-lg px-3 py-1.5 text-sm font-body focus:outline-none focus:border-gold-500"></select>
         </div>
       </div>
 
-      <div id="partner-wall-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
+      <div id="partner-wall-loading" class="flex items-center justify-center gap-3 text-white/40 py-8">
         <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
@@ -1077,12 +1077,12 @@
       </div>
 
       <div id="partner-wall-content" class="hidden">
-        <p id="partner-wall-message" class="hidden text-lg text-navy-700 max-w-3xl mx-auto text-center leading-relaxed mb-6"></p>
-        <p id="partner-wall-tagline" class="text-center font-heading font-bold text-navy-900 mb-10"></p>
+        <p id="partner-wall-message" class="hidden text-lg text-white/80 max-w-3xl mx-auto text-center leading-relaxed mb-6"></p>
+        <p id="partner-wall-tagline" class="text-center font-heading font-bold text-white mb-10"></p>
         <div id="partner-wall-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5"></div>
       </div>
 
-      <div id="partner-wall-empty" class="hidden text-center text-navy-400 italic py-8">No partner showcase published yet.</div>
+      <div id="partner-wall-empty" class="hidden text-center text-white/40 italic py-8">No partner showcase published yet.</div>
 
     </div>
   </section>
@@ -3871,7 +3871,7 @@
         if (!tab) return;
         tab.classList.toggle('bg-crimson-800', cat === category);
         tab.classList.toggle('text-white', cat === category);
-        tab.classList.toggle('text-navy-500', cat !== category);
+        tab.classList.toggle('text-white/60', cat !== category);
       });
 
       const heading = document.getElementById('partner-wall-heading');
@@ -3939,12 +3939,10 @@
 
     function buildShowcaseLogoTile(l) {
       return `
-        <div class="bg-navy-800 rounded-xl h-32 p-3 flex items-center justify-center border-t-4 border-gold-500 shadow-lg transition-transform duration-300 hover:-translate-y-1">
-          <div class="bg-white rounded-lg w-full h-full flex items-center justify-center p-3">
-            ${l.logo_url
-              ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
-              : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}
-          </div>
+        <div class="bg-white rounded-xl h-32 p-4 flex items-center justify-center border-t-4 border-gold-500 shadow-xl transition-transform duration-300 hover:-translate-y-1">
+          ${l.logo_url
+            ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
+            : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}
         </div>`;
     }
 
