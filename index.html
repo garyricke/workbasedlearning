@@ -93,6 +93,7 @@
 
   <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
     * { box-sizing: border-box; }
@@ -1145,6 +1146,41 @@
         </div>
         <div id="testimonials-grid" class="grid md:grid-cols-2 gap-8 hidden"></div>
       </div>
+
+    </div>
+  </section>
+
+  <!-- Field Experience Partner Wall (semester showcase) -->
+  <section id="partner-wall" class="py-24 md:py-32 px-6 md:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-10">
+        <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Field Experience</p>
+        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
+          Partner Wall
+        </h2>
+        <div id="partner-wall-picker-wrap" class="hidden inline-flex items-center gap-2 mt-2">
+          <label class="text-xs font-heading font-semibold text-navy-500 uppercase tracking-widest">Semester</label>
+          <select id="partner-wall-picker" onchange="loadPartnerWallSemester(this.value)"
+            class="border border-navy-200 rounded-lg px-3 py-1.5 text-sm font-body focus:outline-none focus:border-crimson-800"></select>
+        </div>
+      </div>
+
+      <div id="partner-wall-loading" class="flex items-center justify-center gap-3 text-navy-400 py-8">
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+        <span class="text-sm font-heading font-medium">Loading partner wall...</span>
+      </div>
+
+      <div id="partner-wall-content" class="hidden">
+        <p id="partner-wall-message" class="hidden text-lg text-navy-700 max-w-3xl mx-auto text-center leading-relaxed mb-6"></p>
+        <p id="partner-wall-tagline" class="text-center font-heading font-bold text-navy-900 mb-10"></p>
+        <div id="partner-wall-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5"></div>
+      </div>
+
+      <div id="partner-wall-empty" class="hidden text-center text-navy-400 italic py-8">No partner showcase published yet.</div>
 
     </div>
   </section>
@@ -3283,8 +3319,146 @@
         <p id="admin-listings-empty" class="hidden text-xs text-navy-400 italic py-2">No listings yet. Add your first one above.</p>
       </div>
 
+      <!-- Divider -->
+      <hr class="border-navy-100">
+
+      <!-- Partner Showcase Management -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <p class="text-xs uppercase tracking-widest font-heading font-semibold text-navy-400">Partner Showcase</p>
+          <button onclick="toggleAddShowcaseForm()"
+            class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            Add Semester
+          </button>
+        </div>
+
+        <!-- Add/edit semester form (collapsed) -->
+        <div id="add-showcase-form-wrap" class="hidden mb-4">
+          <div class="bg-navy-50 rounded-xl p-4 border border-navy-100">
+            <p id="add-showcase-form-title" class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest mb-3">New Semester</p>
+            <form id="add-showcase-form" class="space-y-2.5" onsubmit="submitNewShowcase(event)">
+              <input type="hidden" name="_edit_id" value="">
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Semester Label *</label>
+                <input name="semester_label" required type="text" placeholder="Fall 2026"
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+              </div>
+              <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Thank-You Message</label>
+                <textarea name="thank_you_message" rows="3" placeholder="This semester our program grew..."
+                  class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 resize-none"></textarea>
+                <p class="text-xs text-navy-400 mt-0.5">Shown above the logo wall &mdash; the growth/community/impact message.</p>
+              </div>
+              <label class="inline-flex items-center gap-2 text-xs font-heading font-semibold text-navy-600">
+                <input type="checkbox" name="is_current" class="rounded border-navy-300">
+                Make this the current semester shown on the site
+              </label>
+              <div id="add-showcase-error" class="hidden text-xs text-crimson-800 font-heading font-semibold"></div>
+              <div class="flex gap-2">
+                <button type="submit" id="add-showcase-submit"
+                  class="flex-1 bg-crimson-800 text-white text-xs font-heading font-bold py-2 rounded-lg hover:bg-crimson-700 transition-colors">
+                  Save Semester
+                </button>
+                <button type="button" onclick="toggleAddShowcaseForm()"
+                  class="px-4 text-xs font-heading font-semibold text-navy-500 hover:text-navy-900 border border-navy-200 rounded-lg transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Semesters list -->
+        <div id="admin-showcases-loading" class="text-xs text-navy-400 py-2">Loading...</div>
+        <div id="admin-showcases-list" class="hidden space-y-2"></div>
+        <div id="admin-showcases-empty" class="hidden text-xs text-navy-300 italic py-2">No semesters yet.</div>
+
+        <!-- Logos for selected semester -->
+        <div id="showcase-logos-panel" class="hidden mt-4 pt-4 border-t border-navy-100">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-xs font-heading font-bold text-navy-700">Logos &mdash; <span id="showcase-logos-label"></span></p>
+            <div class="flex items-center gap-3">
+              <button onclick="downloadShowcaseImage(_activeShowcaseId)"
+                class="text-xs font-heading font-bold text-navy-500 hover:text-navy-800 transition-colors">
+                &#8681; Download Image
+              </button>
+              <button onclick="toggleAddShowcaseLogoForm()"
+                class="flex items-center gap-1.5 text-xs font-heading font-bold text-crimson-800 hover:text-crimson-700 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+                </svg>
+                Add Logo
+              </button>
+            </div>
+          </div>
+
+          <div id="add-showcase-logo-form-wrap" class="hidden mb-4">
+            <div class="bg-navy-50 rounded-xl p-4 border border-navy-100">
+              <p id="add-showcase-logo-form-title" class="text-xs font-heading font-bold text-navy-700 uppercase tracking-widest mb-3">New Logo</p>
+              <form id="add-showcase-logo-form" class="space-y-2.5" onsubmit="submitNewShowcaseLogo(event)">
+                <input type="hidden" name="_edit_id" value="">
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Business Name *</label>
+                  <input name="business_name" required type="text" placeholder="Orbis Design"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Logo</label>
+                  <div id="showcase-logo-drop-zone"
+                    class="border-2 border-dashed border-navy-200 rounded-lg p-3 text-center cursor-pointer hover:border-crimson-800 transition-colors"
+                    onclick="document.getElementById('showcase-logo-file-input').click()"
+                    ondragover="event.preventDefault();this.classList.add('border-crimson-800','bg-crimson-50')"
+                    ondragleave="this.classList.remove('border-crimson-800','bg-crimson-50')"
+                    ondrop="handleShowcaseLogoDrop(event)">
+                    <input type="file" id="showcase-logo-file-input" accept="image/*" class="hidden" onchange="handleShowcaseLogoFile(this.files[0])">
+                    <div id="showcase-logo-preview-wrap" class="hidden mb-2">
+                      <img id="showcase-logo-preview-img" src="" alt="" class="h-10 max-w-[140px] object-contain mx-auto rounded">
+                    </div>
+                    <div id="showcase-logo-drop-hint" class="flex items-center justify-center gap-1.5 text-navy-400 text-xs">
+                      <svg class="w-4 h-4 text-navy-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                      Drop image or <span class="text-crimson-800 font-medium ml-0.5">click to upload</span>
+                    </div>
+                    <p id="showcase-logo-upload-status" class="text-xs mt-1 hidden"></p>
+                  </div>
+                  <input type="text" name="logo_url" id="showcase-logo-url-input"
+                    placeholder="or paste a logo URL directly"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800 mt-1.5"
+                    oninput="if(this.value.startsWith('http'))showShowcaseLogoPreview(this.value)">
+                </div>
+                <div>
+                  <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Sort Order</label>
+                  <input name="sort_order" type="number" value="0"
+                    class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
+                </div>
+                <div id="add-showcase-logo-error" class="hidden text-xs text-crimson-800 font-heading font-semibold"></div>
+                <div class="flex gap-2">
+                  <button type="submit" id="add-showcase-logo-submit"
+                    class="flex-1 bg-crimson-800 text-white text-xs font-heading font-bold py-2 rounded-lg hover:bg-crimson-700 transition-colors">
+                    Save Logo
+                  </button>
+                  <button type="button" onclick="toggleAddShowcaseLogoForm()"
+                    class="px-4 text-xs font-heading font-semibold text-navy-500 hover:text-navy-900 border border-navy-200 rounded-lg transition-colors">
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div id="admin-showcase-logos-loading" class="text-xs text-navy-400 py-2">Loading...</div>
+          <div id="admin-showcase-logos-list" class="hidden space-y-2 max-h-64 overflow-y-auto"></div>
+          <div id="admin-showcase-logos-empty" class="hidden text-xs text-navy-300 italic py-2">No logos yet.</div>
+        </div>
+      </div>
+
     </div>
   </div>
+
+  <!-- Hidden off-screen render target for the shareable showcase image -->
+  <div id="showcase-export-render" style="position:fixed;left:-9999px;top:0;width:1080px;height:1080px;"></div>
 
   <!-- Hub backdrop -->
   <div id="wbl-hub-backdrop" class="fixed inset-0 z-[200] bg-black/40 hidden" onclick="closeWblHub()"></div>
@@ -3711,6 +3885,77 @@
             <p class="font-heading font-bold text-crimson-800 text-sm leading-tight">Your Business?</p>
             <p class="text-[10px] uppercase tracking-widest mt-1 font-semibold text-navy-400">Join the List</p>
           </div>
+        </div>`;
+    }
+
+    // ── Public: Field Experience Partner Wall (semester showcase) ────────────
+
+    let _allShowcases = [];
+
+    async function loadPartnerWall() {
+      const loading    = document.getElementById('partner-wall-loading');
+      const empty      = document.getElementById('partner-wall-empty');
+      const pickerWrap = document.getElementById('partner-wall-picker-wrap');
+      const picker     = document.getElementById('partner-wall-picker');
+
+      const { data, error } = await db
+        .from('partner_showcases')
+        .select('id, semester_label, thank_you_message, is_current, created_at')
+        .order('created_at', { ascending: false });
+
+      if (loading) loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      _allShowcases = data;
+      if (picker) {
+        picker.innerHTML = data.map(s => `<option value="${s.id}">${esc(s.semester_label)}</option>`).join('');
+      }
+      if (data.length > 1 && pickerWrap) pickerWrap.classList.remove('hidden');
+
+      const current = data.find(s => s.is_current) || data[0];
+      if (picker) picker.value = current.id;
+      renderPartnerWall(current);
+    }
+
+    function loadPartnerWallSemester(id) {
+      const s = _allShowcases.find(x => x.id === id);
+      if (s) renderPartnerWall(s);
+    }
+
+    async function renderPartnerWall(showcase) {
+      const content   = document.getElementById('partner-wall-content');
+      const messageEl = document.getElementById('partner-wall-message');
+      const taglineEl = document.getElementById('partner-wall-tagline');
+      const grid      = document.getElementById('partner-wall-grid');
+
+      if (showcase.thank_you_message) {
+        messageEl.textContent = showcase.thank_you_message;
+        messageEl.classList.remove('hidden');
+      } else {
+        messageEl.classList.add('hidden');
+      }
+      taglineEl.textContent = `Thank you to our ${showcase.semester_label} partner businesses`;
+
+      const { data } = await db
+        .from('partner_showcase_logos')
+        .select('*')
+        .eq('showcase_id', showcase.id)
+        .order('sort_order');
+
+      grid.innerHTML = (data || []).map(buildShowcaseLogoTile).join('');
+      content.classList.remove('hidden');
+    }
+
+    function buildShowcaseLogoTile(l) {
+      return `
+        <div class="bg-white rounded-xl border border-navy-100 h-28 flex items-center justify-center p-4">
+          ${l.logo_url
+            ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
+            : `<span class="font-heading font-bold text-navy-400 text-sm text-center">${esc(l.business_name)}</span>`}
         </div>`;
     }
 
@@ -4380,9 +4625,409 @@
       loadAdminListings();
     }
 
-    // Load partner grid and testimonials on page load
+    // ── Partner Showcase admin ────────────────────────────────────────────────
+
+    let _activeShowcaseId = null;
+
+    function toggleAddShowcaseForm() {
+      const wrap = document.getElementById('add-showcase-form-wrap');
+      const isHidden = wrap.classList.toggle('hidden');
+      if (!isHidden) {
+        setTimeout(() => wrap.querySelector('input[name="semester_label"]').focus(), 50);
+      } else {
+        const form = document.getElementById('add-showcase-form');
+        form.reset();
+        form.querySelector('input[name="_edit_id"]').value = '';
+        document.getElementById('add-showcase-form-title').textContent = 'New Semester';
+        document.getElementById('add-showcase-submit').textContent = 'Save Semester';
+      }
+    }
+
+    async function loadAdminShowcases() {
+      const loading = document.getElementById('admin-showcases-loading');
+      const list    = document.getElementById('admin-showcases-list');
+      const empty   = document.getElementById('admin-showcases-empty');
+
+      if (loading) loading.classList.remove('hidden');
+      if (list) list.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
+
+      const { data, error } = await db
+        .from('partner_showcases')
+        .select('id, semester_label, thank_you_message, is_current, created_at')
+        .order('created_at', { ascending: false });
+
+      if (loading) loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (list) {
+        list.classList.remove('hidden');
+        list.innerHTML = data.map(buildAdminShowcaseItem).join('');
+      }
+    }
+
+    function buildAdminShowcaseItem(s) {
+      const safeLabel = esc(s.semester_label).replace(/'/g, "\\'");
+      return `
+        <div class="border rounded-lg p-3 ${_activeShowcaseId === s.id ? 'border-crimson-800' : 'border-navy-100'}">
+          <div class="flex items-start justify-between gap-2">
+            <button type="button" class="min-w-0 flex-1 text-left" onclick="selectShowcase('${s.id}', '${safeLabel}')">
+              <p class="font-heading font-bold text-navy-900 text-xs truncate">${esc(s.semester_label)}</p>
+              <span class="text-xs font-heading font-semibold ${s.is_current ? 'text-green-600' : 'text-navy-400'}">
+                ${s.is_current ? '● Current on site' : '○ Not current'}
+              </span>
+            </button>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              ${!s.is_current ? `<button onclick="setShowcaseCurrent('${s.id}')" title="Set as current semester" class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors text-xs">★</button>` : ''}
+              <button onclick="editShowcase('${s.id}')" title="Edit semester"
+                class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                </svg>
+              </button>
+              <button onclick="deleteShowcase('${s.id}', '${safeLabel}')" title="Delete semester"
+                class="w-7 h-7 rounded bg-crimson-50 text-crimson-800 hover:bg-crimson-100 flex items-center justify-center transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    async function editShowcase(id) {
+      const { data, error } = await db.from('partner_showcases').select('*').eq('id', id).single();
+      if (error || !data) return;
+      const form = document.getElementById('add-showcase-form');
+      const wrap = document.getElementById('add-showcase-form-wrap');
+      form.elements['semester_label'].value = data.semester_label ?? '';
+      form.elements['thank_you_message'].value = data.thank_you_message ?? '';
+      form.elements['is_current'].checked = !!data.is_current;
+      form.querySelector('input[name="_edit_id"]').value = id;
+      document.getElementById('add-showcase-form-title').textContent = 'Edit Semester';
+      document.getElementById('add-showcase-submit').textContent = 'Update Semester';
+      wrap.classList.remove('hidden');
+      setTimeout(() => form.querySelector('input[name="semester_label"]').focus(), 50);
+    }
+
+    async function submitNewShowcase(e) {
+      e.preventDefault();
+      const form  = e.target;
+      const btn   = document.getElementById('add-showcase-submit');
+      const errEl = document.getElementById('add-showcase-error');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errEl.classList.add('hidden');
+
+      const raw = Object.fromEntries(new FormData(form));
+      const editId = raw._edit_id;
+      delete raw._edit_id;
+      raw.is_current = form.elements['is_current'].checked;
+      if (!raw.thank_you_message) delete raw.thank_you_message;
+
+      const { data, error } = editId
+        ? await db.from('partner_showcases').update(raw).eq('id', editId).select().single()
+        : await db.from('partner_showcases').insert([raw]).select().single();
+
+      if (error) {
+        errEl.textContent = 'Error: ' + error.message;
+        errEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = editId ? 'Update Semester' : 'Save Semester';
+        return;
+      }
+
+      if (raw.is_current && data) {
+        await db.from('partner_showcases').update({ is_current: false }).neq('id', data.id);
+      }
+
+      form.reset();
+      form.querySelector('input[name="_edit_id"]').value = '';
+      document.getElementById('add-showcase-form-title').textContent = 'New Semester';
+      toggleAddShowcaseForm();
+      loadAdminShowcases();
+      loadPartnerWall();
+      btn.disabled = false;
+      btn.textContent = 'Save Semester';
+    }
+
+    async function setShowcaseCurrent(id) {
+      await db.from('partner_showcases').update({ is_current: false }).neq('id', id);
+      await db.from('partner_showcases').update({ is_current: true }).eq('id', id);
+      loadAdminShowcases();
+      loadPartnerWall();
+    }
+
+    async function deleteShowcase(id, label) {
+      if (!confirm('Delete "' + label + '" and all its logos? This cannot be undone.')) return;
+      await db.from('partner_showcases').delete().eq('id', id);
+      if (_activeShowcaseId === id) {
+        _activeShowcaseId = null;
+        document.getElementById('showcase-logos-panel').classList.add('hidden');
+      }
+      loadAdminShowcases();
+      loadPartnerWall();
+    }
+
+    function selectShowcase(id, label) {
+      _activeShowcaseId = id;
+      document.getElementById('showcase-logos-label').textContent = label;
+      document.getElementById('showcase-logos-panel').classList.remove('hidden');
+      loadAdminShowcases();
+      loadAdminShowcaseLogos(id);
+    }
+
+    // ── Partner Showcase logos admin ──────────────────────────────────────────
+
+    async function loadAdminShowcaseLogos(showcaseId) {
+      const loading = document.getElementById('admin-showcase-logos-loading');
+      const list    = document.getElementById('admin-showcase-logos-list');
+      const empty   = document.getElementById('admin-showcase-logos-empty');
+
+      if (loading) loading.classList.remove('hidden');
+      if (list) list.classList.add('hidden');
+      if (empty) empty.classList.add('hidden');
+
+      const { data, error } = await db
+        .from('partner_showcase_logos')
+        .select('*')
+        .eq('showcase_id', showcaseId)
+        .order('sort_order');
+
+      if (loading) loading.classList.add('hidden');
+
+      if (error || !data || data.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+      }
+
+      if (list) {
+        list.classList.remove('hidden');
+        list.innerHTML = data.map(buildAdminShowcaseLogoItem).join('');
+      }
+    }
+
+    function buildAdminShowcaseLogoItem(l) {
+      const safeName = esc(l.business_name).replace(/'/g, "\\'");
+      return `
+        <div class="border border-navy-100 rounded-lg p-2.5 flex items-center gap-3">
+          <div class="w-16 h-10 flex-shrink-0 bg-white border border-navy-100 rounded flex items-center justify-center overflow-hidden">
+            ${l.logo_url ? `<img src="${esc(l.logo_url)}" alt="" class="max-w-full max-h-full object-contain">` : ''}
+          </div>
+          <p class="flex-1 min-w-0 font-heading font-bold text-navy-900 text-xs truncate">${esc(l.business_name)}</p>
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            <button onclick="editShowcaseLogo('${l.id}')" title="Edit logo"
+              class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+            </button>
+            <button onclick="deleteShowcaseLogo('${l.id}', '${safeName}')" title="Delete logo"
+              class="w-7 h-7 rounded bg-crimson-50 text-crimson-800 hover:bg-crimson-100 flex items-center justify-center transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>`;
+    }
+
+    function toggleAddShowcaseLogoForm() {
+      const wrap = document.getElementById('add-showcase-logo-form-wrap');
+      const isHidden = wrap.classList.toggle('hidden');
+      if (!isHidden) {
+        setTimeout(() => wrap.querySelector('input[name="business_name"]').focus(), 50);
+      } else {
+        const form = document.getElementById('add-showcase-logo-form');
+        form.reset();
+        form.querySelector('input[name="_edit_id"]').value = '';
+        document.getElementById('showcase-logo-preview-wrap').classList.add('hidden');
+        document.getElementById('showcase-logo-drop-hint').classList.remove('hidden');
+        document.getElementById('add-showcase-logo-form-title').textContent = 'New Logo';
+        document.getElementById('add-showcase-logo-submit').textContent = 'Save Logo';
+      }
+    }
+
+    async function editShowcaseLogo(id) {
+      const { data, error } = await db.from('partner_showcase_logos').select('*').eq('id', id).single();
+      if (error || !data) return;
+      const form = document.getElementById('add-showcase-logo-form');
+      const wrap = document.getElementById('add-showcase-logo-form-wrap');
+      form.elements['business_name'].value = data.business_name ?? '';
+      form.elements['logo_url'].value = data.logo_url ?? '';
+      form.elements['sort_order'].value = data.sort_order ?? 0;
+      if (data.logo_url) showShowcaseLogoPreview(data.logo_url);
+      form.querySelector('input[name="_edit_id"]').value = id;
+      document.getElementById('add-showcase-logo-form-title').textContent = 'Edit Logo';
+      document.getElementById('add-showcase-logo-submit').textContent = 'Update Logo';
+      wrap.classList.remove('hidden');
+      setTimeout(() => form.querySelector('input[name="business_name"]').focus(), 50);
+    }
+
+    async function submitNewShowcaseLogo(e) {
+      e.preventDefault();
+      const form  = e.target;
+      const btn   = document.getElementById('add-showcase-logo-submit');
+      const errEl = document.getElementById('add-showcase-logo-error');
+
+      if (!_activeShowcaseId) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+      errEl.classList.add('hidden');
+
+      const raw = Object.fromEntries(new FormData(form));
+      const editId = raw._edit_id;
+      delete raw._edit_id;
+      raw.sort_order = parseInt(raw.sort_order) || 0;
+      raw.showcase_id = _activeShowcaseId;
+      Object.keys(raw).forEach(k => { if (raw[k] === '') delete raw[k]; });
+
+      const { error } = editId
+        ? await db.from('partner_showcase_logos').update(raw).eq('id', editId)
+        : await db.from('partner_showcase_logos').insert([raw]);
+
+      if (error) {
+        errEl.textContent = 'Error: ' + error.message;
+        errEl.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = editId ? 'Update Logo' : 'Save Logo';
+        return;
+      }
+
+      form.reset();
+      form.querySelector('input[name="_edit_id"]').value = '';
+      document.getElementById('add-showcase-logo-form-title').textContent = 'New Logo';
+      toggleAddShowcaseLogoForm();
+      loadAdminShowcaseLogos(_activeShowcaseId);
+      loadPartnerWall();
+      btn.disabled = false;
+      btn.textContent = 'Save Logo';
+    }
+
+    async function deleteShowcaseLogo(id, name) {
+      if (!confirm('Delete logo for "' + name + '"?')) return;
+      await db.from('partner_showcase_logos').delete().eq('id', id);
+      loadAdminShowcaseLogos(_activeShowcaseId);
+      loadPartnerWall();
+    }
+
+    const _SHOWCASE_CLDNAME   = 'dikkdclum';
+    const _SHOWCASE_CLDPRESET = 'wbl_uploads';
+
+    function showShowcaseLogoPreview(url) {
+      const img  = document.getElementById('showcase-logo-preview-img');
+      const wrap = document.getElementById('showcase-logo-preview-wrap');
+      const hint = document.getElementById('showcase-logo-drop-hint');
+      img.src = url;
+      img.onload  = () => { wrap.classList.remove('hidden'); hint.classList.add('hidden'); };
+      img.onerror = () => { wrap.classList.add('hidden');    hint.classList.remove('hidden'); };
+    }
+
+    async function uploadShowcaseLogo(file) {
+      const statusEl = document.getElementById('showcase-logo-upload-status');
+      statusEl.textContent = 'Uploading…';
+      statusEl.className = 'text-xs mt-1 text-navy-500';
+      statusEl.classList.remove('hidden');
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', _SHOWCASE_CLDPRESET);
+      fd.append('folder', 'wbl/logos/showcase');
+      try {
+        const res  = await fetch(`https://api.cloudinary.com/v1_1/${_SHOWCASE_CLDNAME}/image/upload`, { method: 'POST', body: fd });
+        const json = await res.json();
+        if (json.secure_url) {
+          document.getElementById('showcase-logo-url-input').value = json.secure_url;
+          showShowcaseLogoPreview(json.secure_url);
+          statusEl.textContent = '✓ Uploaded';
+          statusEl.classList.replace('text-navy-500', 'text-green-600');
+          setTimeout(() => statusEl.classList.add('hidden'), 2000);
+        } else {
+          throw new Error(json.error?.message || 'Upload failed');
+        }
+      } catch (err) {
+        statusEl.textContent = 'Upload failed — paste a URL below instead';
+        statusEl.classList.replace('text-navy-500', 'text-red-600');
+      }
+    }
+
+    function handleShowcaseLogoDrop(e) {
+      e.preventDefault();
+      document.getElementById('showcase-logo-drop-zone').classList.remove('border-crimson-800', 'bg-crimson-50');
+      const file = e.dataTransfer.files[0];
+      if (file?.type.startsWith('image/')) uploadShowcaseLogo(file);
+    }
+
+    function handleShowcaseLogoFile(file) {
+      if (file?.type.startsWith('image/')) uploadShowcaseLogo(file);
+    }
+
+    // ── Partner Showcase: downloadable share image ────────────────────────────
+
+    async function downloadShowcaseImage(showcaseId) {
+      if (!showcaseId) { alert('Select a semester first.'); return; }
+
+      const { data: showcase } = await db.from('partner_showcases').select('*').eq('id', showcaseId).single();
+      const { data: logos } = await db.from('partner_showcase_logos').select('*').eq('showcase_id', showcaseId).order('sort_order');
+      if (!showcase) return;
+
+      const container = document.getElementById('showcase-export-render');
+      container.innerHTML = buildShowcaseExportHTML(showcase, logos || []);
+
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+
+      const imgs = [...container.querySelectorAll('img')];
+      await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => { img.onload = res; img.onerror = res; })));
+
+      const canvas = await html2canvas(container, { width: 1080, height: 1080, scale: 1, useCORS: true, backgroundColor: '#0B1220' });
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `FE-Partner-Wall-${showcase.semester_label.replace(/\s+/g, '-')}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    }
+
+    function buildShowcaseExportHTML(showcase, logos) {
+      const cols = logos.length > 9 ? 4 : 3;
+      const tiles = logos.map(l => `
+        <div style="background:#fff;border:2px solid #e0e0e0;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:14px;height:170px;box-sizing:border-box;">
+          ${l.logo_url
+            ? `<img src="${esc(l.logo_url)}" crossorigin="anonymous" style="max-width:100%;max-height:100%;object-fit:contain;">`
+            : `<span style="font-family:'Montserrat',sans-serif;font-weight:800;color:#333;font-size:14px;text-align:center;">${esc(l.business_name)}</span>`}
+        </div>`).join('');
+
+      return `
+        <div style="width:1080px;height:1080px;background:linear-gradient(160deg,#0B1220 0%,#1a0508 55%,#3a0b10 100%);font-family:'Open Sans',sans-serif;display:flex;flex-direction:column;box-sizing:border-box;">
+          <div style="height:10px;width:100%;background:linear-gradient(90deg,#AC161D 0%,#AC161D 60%,#FBCD07 60%,#FBCD07 100%);flex-shrink:0;"></div>
+          <div style="text-align:center;padding:40px 60px 10px 60px;flex-shrink:0;">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;letter-spacing:5px;color:#FBCD07;text-transform:uppercase;">Batavia High School</div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:52px;color:#fff;letter-spacing:-1px;line-height:1.05;margin-top:8px;">FIELD EXPERIENCE</div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;color:#FBCD07;letter-spacing:2px;margin-top:8px;">${esc(showcase.semester_label.toUpperCase())} PARTNERS</div>
+            ${showcase.thank_you_message ? `<p style="max-width:820px;margin:16px auto 0;font-size:15px;line-height:1.5;color:#eee;">${esc(showcase.thank_you_message)}</p>` : ''}
+          </div>
+          <div style="flex:1;display:grid;grid-template-columns:repeat(${cols},1fr);grid-auto-rows:min-content;row-gap:20px;column-gap:24px;padding:16px 60px;align-content:center;overflow:hidden;">
+            ${tiles}
+          </div>
+          <div style="text-align:center;padding:20px 0 34px 0;flex-shrink:0;">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#fff;">Thank you to our ${esc(showcase.semester_label)} partner businesses</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.55);margin-top:4px;">workbasedlearningbps101.net</div>
+          </div>
+        </div>`;
+    }
+
+    // Load partner grid, testimonials, and the partner wall on page load
     loadPartners();
     loadTestimonials();
+    loadPartnerWall();
 
     // Reload admin panels every time the hub opens
     (function() {
@@ -4392,6 +5037,7 @@
         loadAdminPartners();
         loadAdminListings();
         loadAdminTestimonials();
+        loadAdminShowcases();
       };
     })();
   </script>
