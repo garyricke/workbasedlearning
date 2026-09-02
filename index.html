@@ -928,7 +928,7 @@
               playsinline
               muted
               preload="metadata"
-              poster="https://res.cloudinary.com/dikkdclum/video/upload/so_2/v1780491559/wbl/video/incubator.jpg"
+              poster="https://res.cloudinary.com/dikkdclum/video/upload/so_7/v1780491559/wbl/video/incubator.jpg"
               onclick="this.paused ? this.play() : this.pause()"
             >
               <source src="https://res.cloudinary.com/dikkdclum/video/upload/vc_h264,f_mp4/v1780491559/wbl/video/incubator.mp4" type="video/mp4">
@@ -3939,10 +3939,12 @@
 
     function buildShowcaseLogoTile(l) {
       return `
-        <div class="bg-white rounded-xl border border-navy-100 h-28 flex items-center justify-center p-4">
-          ${l.logo_url
-            ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
-            : `<span class="font-heading font-bold text-navy-400 text-sm text-center">${esc(l.business_name)}</span>`}
+        <div class="bg-navy-800 rounded-xl h-32 p-3 flex items-center justify-center border-t-4 border-gold-500 shadow-lg transition-transform duration-300 hover:-translate-y-1">
+          <div class="bg-white rounded-lg w-full h-full flex items-center justify-center p-3">
+            ${l.logo_url
+              ? `<img src="${esc(l.logo_url)}" alt="${esc(l.business_name)}" class="max-w-full max-h-full object-contain">`
+              : `<span class="font-heading font-bold text-navy-700 text-sm text-center">${esc(l.business_name)}</span>`}
+          </div>
         </div>`;
     }
 
@@ -4999,7 +5001,7 @@
         : `Thank you to our ${esc(showcase.semester_label)} partner businesses`;
       const cols = logos.length > 9 ? 4 : 3;
       const tiles = logos.map(l => `
-        <div style="background:#fff;border:2px solid #e0e0e0;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:14px;height:170px;box-sizing:border-box;">
+        <div style="background:#fff;border-top:4px solid #FBCD07;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:14px;height:170px;box-sizing:border-box;">
           ${l.logo_url
             ? `<img src="${esc(l.logo_url)}" crossorigin="anonymous" style="max-width:100%;max-height:100%;object-fit:contain;">`
             : `<span style="font-family:'Montserrat',sans-serif;font-weight:800;color:#333;font-size:14px;text-align:center;">${esc(l.business_name)}</span>`}
