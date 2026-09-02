@@ -1046,10 +1046,22 @@
 
       <div class="text-center mb-10">
         <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold mb-4">Field Experience</p>
-        <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
+        <h2 id="partner-wall-heading" class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-4">
           Partner Wall
         </h2>
-        <div id="partner-wall-picker-wrap" class="hidden inline-flex items-center gap-2 mt-2">
+
+        <div id="partner-wall-tabs" class="hidden inline-flex rounded-lg border border-navy-200 p-1 mb-4">
+          <button type="button" id="partner-wall-tab-partner" onclick="switchPartnerWallCategory('partner')"
+            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors">
+            Business Partners
+          </button>
+          <button type="button" id="partner-wall-tab-self_enterprise" onclick="switchPartnerWallCategory('self_enterprise')"
+            class="px-4 py-2 text-xs font-heading font-bold uppercase tracking-wider rounded-md transition-colors">
+            Self Enterprise
+          </button>
+        </div>
+
+        <div id="partner-wall-picker-wrap" class="hidden flex items-center justify-center gap-2 mt-2">
           <label class="text-xs font-heading font-semibold text-navy-500 uppercase tracking-widest">Semester</label>
           <select id="partner-wall-picker" onchange="loadPartnerWallSemester(this.value)"
             class="border border-navy-200 rounded-lg px-3 py-1.5 text-sm font-body focus:outline-none focus:border-crimson-800"></select>
@@ -3267,6 +3279,19 @@
             <form id="add-showcase-form" class="space-y-2.5" onsubmit="submitNewShowcase(event)">
               <input type="hidden" name="_edit_id" value="">
               <div>
+                <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Wall *</label>
+                <div class="flex gap-2">
+                  <label class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-navy-200 text-xs font-heading font-semibold text-navy-600 cursor-pointer has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800">
+                    <input type="radio" name="category" value="partner" checked class="sr-only">
+                    Business Partners
+                  </label>
+                  <label class="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg border border-navy-200 text-xs font-heading font-semibold text-navy-600 cursor-pointer has-[:checked]:bg-crimson-800 has-[:checked]:text-white has-[:checked]:border-crimson-800">
+                    <input type="radio" name="category" value="self_enterprise" class="sr-only">
+                    Self Enterprise
+                  </label>
+                </div>
+              </div>
+              <div>
                 <label class="text-xs font-heading font-semibold text-navy-500 block mb-1">Semester Label *</label>
                 <input name="semester_label" required type="text" placeholder="Fall 2026"
                   class="w-full border border-navy-200 rounded-lg px-3 py-2 text-sm font-body focus:outline-none focus:border-crimson-800">
@@ -3816,32 +3841,68 @@
     // ── Public: Field Experience Partner Wall (semester showcase) ────────────
 
     let _allShowcases = [];
+    let _currentWallCategory = 'partner';
+    const WALL_CATEGORY_COPY = {
+      partner:         { heading: 'Partner Wall',         tagline: (label) => `Thank you to our ${label} partner businesses`,      empty: 'No partner showcase published yet.' },
+      self_enterprise: { heading: 'Self Enterprise Wall',  tagline: (label) => `Meet our ${label} self-enterprise students`,        empty: 'No self-enterprise showcase published yet.' },
+    };
 
     async function loadPartnerWall() {
+      const { data, error } = await db
+        .from('partner_showcases')
+        .select('id, semester_label, thank_you_message, is_current, category, created_at')
+        .order('created_at', { ascending: false });
+
+      if (error || !data) return;
+
+      _allShowcases = data;
+      const hasSelfEnterprise = data.some(s => s.category === 'self_enterprise');
+      const tabsEl = document.getElementById('partner-wall-tabs');
+      if (tabsEl) tabsEl.classList.toggle('hidden', !hasSelfEnterprise);
+
+      switchPartnerWallCategory('partner');
+    }
+
+    function switchPartnerWallCategory(category) {
+      _currentWallCategory = category;
+
+      ['partner', 'self_enterprise'].forEach(cat => {
+        const tab = document.getElementById('partner-wall-tab-' + cat);
+        if (!tab) return;
+        tab.classList.toggle('bg-crimson-800', cat === category);
+        tab.classList.toggle('text-white', cat === category);
+        tab.classList.toggle('text-navy-500', cat !== category);
+      });
+
+      const heading = document.getElementById('partner-wall-heading');
+      if (heading) heading.textContent = WALL_CATEGORY_COPY[category].heading;
+
       const loading    = document.getElementById('partner-wall-loading');
       const empty      = document.getElementById('partner-wall-empty');
+      const content    = document.getElementById('partner-wall-content');
       const pickerWrap = document.getElementById('partner-wall-picker-wrap');
       const picker     = document.getElementById('partner-wall-picker');
 
-      const { data, error } = await db
-        .from('partner_showcases')
-        .select('id, semester_label, thank_you_message, is_current, created_at')
-        .order('created_at', { ascending: false });
-
       if (loading) loading.classList.add('hidden');
+      const inCategory = _allShowcases.filter(s => s.category === category);
 
-      if (error || !data || data.length === 0) {
-        if (empty) empty.classList.remove('hidden');
+      if (inCategory.length === 0) {
+        if (content) content.classList.add('hidden');
+        if (pickerWrap) pickerWrap.classList.add('hidden');
+        if (empty) {
+          empty.textContent = WALL_CATEGORY_COPY[category].empty;
+          empty.classList.remove('hidden');
+        }
         return;
       }
+      if (empty) empty.classList.add('hidden');
 
-      _allShowcases = data;
       if (picker) {
-        picker.innerHTML = data.map(s => `<option value="${s.id}">${esc(s.semester_label)}</option>`).join('');
+        picker.innerHTML = inCategory.map(s => `<option value="${s.id}">${esc(s.semester_label)}</option>`).join('');
       }
-      if (data.length > 1 && pickerWrap) pickerWrap.classList.remove('hidden');
+      pickerWrap.classList.toggle('hidden', inCategory.length <= 1);
 
-      const current = data.find(s => s.is_current) || data[0];
+      const current = inCategory.find(s => s.is_current) || inCategory[0];
       if (picker) picker.value = current.id;
       renderPartnerWall(current);
     }
@@ -3863,7 +3924,8 @@
       } else {
         messageEl.classList.add('hidden');
       }
-      taglineEl.textContent = `Thank you to our ${showcase.semester_label} partner businesses`;
+      const copy = WALL_CATEGORY_COPY[showcase.category] || WALL_CATEGORY_COPY.partner;
+      taglineEl.textContent = copy.tagline(showcase.semester_label);
 
       const { data } = await db
         .from('partner_showcase_logos')
@@ -4579,7 +4641,8 @@
 
       const { data, error } = await db
         .from('partner_showcases')
-        .select('id, semester_label, thank_you_message, is_current, created_at')
+        .select('id, semester_label, thank_you_message, is_current, category, created_at')
+        .order('category')
         .order('created_at', { ascending: false });
 
       if (loading) loading.classList.add('hidden');
@@ -4595,19 +4658,23 @@
       }
     }
 
+    const SHOWCASE_CATEGORY_LABEL = { partner: 'Business Partners', self_enterprise: 'Self Enterprise' };
+
     function buildAdminShowcaseItem(s) {
       const safeLabel = esc(s.semester_label).replace(/'/g, "\\'");
+      const catLabel = SHOWCASE_CATEGORY_LABEL[s.category] || s.category;
       return `
         <div class="border rounded-lg p-3 ${_activeShowcaseId === s.id ? 'border-crimson-800' : 'border-navy-100'}">
           <div class="flex items-start justify-between gap-2">
             <button type="button" class="min-w-0 flex-1 text-left" onclick="selectShowcase('${s.id}', '${safeLabel}')">
+              <span class="inline-block text-[10px] font-heading font-bold uppercase tracking-wider text-navy-400 mb-0.5">${esc(catLabel)}</span>
               <p class="font-heading font-bold text-navy-900 text-xs truncate">${esc(s.semester_label)}</p>
               <span class="text-xs font-heading font-semibold ${s.is_current ? 'text-green-600' : 'text-navy-400'}">
                 ${s.is_current ? '● Current on site' : '○ Not current'}
               </span>
             </button>
             <div class="flex items-center gap-1.5 flex-shrink-0">
-              ${!s.is_current ? `<button onclick="setShowcaseCurrent('${s.id}')" title="Set as current semester" class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors text-xs">★</button>` : ''}
+              ${!s.is_current ? `<button onclick="setShowcaseCurrent('${s.id}', '${s.category}')" title="Set as current" class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors text-xs">★</button>` : ''}
               <button onclick="editShowcase('${s.id}')" title="Edit semester"
                 class="w-7 h-7 rounded bg-navy-50 text-navy-600 hover:bg-navy-100 flex items-center justify-center transition-colors">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -4633,6 +4700,8 @@
       form.elements['semester_label'].value = data.semester_label ?? '';
       form.elements['thank_you_message'].value = data.thank_you_message ?? '';
       form.elements['is_current'].checked = !!data.is_current;
+      const catRadio = form.querySelector(`input[name="category"][value="${data.category || 'partner'}"]`);
+      if (catRadio) catRadio.checked = true;
       form.querySelector('input[name="_edit_id"]').value = id;
       document.getElementById('add-showcase-form-title').textContent = 'Edit Semester';
       document.getElementById('add-showcase-submit').textContent = 'Update Semester';
@@ -4669,7 +4738,7 @@
       }
 
       if (raw.is_current && data) {
-        await db.from('partner_showcases').update({ is_current: false }).neq('id', data.id);
+        await db.from('partner_showcases').update({ is_current: false }).eq('category', data.category).neq('id', data.id);
       }
 
       form.reset();
@@ -4682,8 +4751,8 @@
       btn.textContent = 'Save Semester';
     }
 
-    async function setShowcaseCurrent(id) {
-      await db.from('partner_showcases').update({ is_current: false }).neq('id', id);
+    async function setShowcaseCurrent(id, category) {
+      await db.from('partner_showcases').update({ is_current: false }).eq('category', category).neq('id', id);
       await db.from('partner_showcases').update({ is_current: true }).eq('id', id);
       loadAdminShowcases();
       loadPartnerWall();
@@ -4915,13 +4984,19 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `FE-Partner-Wall-${showcase.semester_label.replace(/\s+/g, '-')}.png`;
+        const filePrefix = showcase.category === 'self_enterprise' ? 'FE-Self-Enterprise-Wall' : 'FE-Partner-Wall';
+        a.download = `${filePrefix}-${showcase.semester_label.replace(/\s+/g, '-')}.png`;
         a.click();
         URL.revokeObjectURL(url);
       }, 'image/png');
     }
 
     function buildShowcaseExportHTML(showcase, logos) {
+      const isSelfEnterprise = showcase.category === 'self_enterprise';
+      const eyebrowLabel = isSelfEnterprise ? 'SELF ENTERPRISE' : 'PARTNERS';
+      const footerLabel  = isSelfEnterprise
+        ? `Meet our ${esc(showcase.semester_label)} self-enterprise students`
+        : `Thank you to our ${esc(showcase.semester_label)} partner businesses`;
       const cols = logos.length > 9 ? 4 : 3;
       const tiles = logos.map(l => `
         <div style="background:#fff;border:2px solid #e0e0e0;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:14px;height:170px;box-sizing:border-box;">
@@ -4936,14 +5011,14 @@
           <div style="text-align:center;padding:40px 60px 10px 60px;flex-shrink:0;">
             <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:16px;letter-spacing:5px;color:#FBCD07;text-transform:uppercase;">Batavia High School</div>
             <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:52px;color:#fff;letter-spacing:-1px;line-height:1.05;margin-top:8px;">FIELD EXPERIENCE</div>
-            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;color:#FBCD07;letter-spacing:2px;margin-top:8px;">${esc(showcase.semester_label.toUpperCase())} PARTNERS</div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:24px;color:#FBCD07;letter-spacing:2px;margin-top:8px;">${esc(showcase.semester_label.toUpperCase())} ${eyebrowLabel}</div>
             ${showcase.thank_you_message ? `<p style="max-width:820px;margin:16px auto 0;font-size:15px;line-height:1.5;color:#eee;">${esc(showcase.thank_you_message)}</p>` : ''}
           </div>
           <div style="flex:1;display:grid;grid-template-columns:repeat(${cols},1fr);grid-auto-rows:min-content;row-gap:20px;column-gap:24px;padding:16px 60px;align-content:center;overflow:hidden;">
             ${tiles}
           </div>
           <div style="text-align:center;padding:20px 0 34px 0;flex-shrink:0;">
-            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#fff;">Thank you to our ${esc(showcase.semester_label)} partner businesses</div>
+            <div style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#fff;">${footerLabel}</div>
             <div style="font-size:13px;color:rgba(255,255,255,.55);margin-top:4px;">workbasedlearningbps101.net</div>
           </div>
         </div>`;
