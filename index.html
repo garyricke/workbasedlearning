@@ -546,55 +546,6 @@
   </section>
 
   <!-- Audio Overview Section -->
-  <section class="py-16 md:py-20 px-6 md:px-8 bg-gradient-to-r from-navy-900 to-navy-950">
-    <div class="max-w-4xl mx-auto">
-
-      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-
-        <!-- Play Icon / Visual -->
-        <div class="flex-shrink-0">
-          <div class="w-24 h-24 md:w-32 md:h-32 rounded-full bg-crimson-800 flex items-center justify-center shadow-2xl shadow-crimson-800/30 relative">
-            <svg class="w-10 h-10 md:w-12 md:h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <!-- Pulse ring -->
-            <div class="absolute inset-0 rounded-full border-2 border-crimson-400 animate-ping opacity-20"></div>
-          </div>
-        </div>
-
-        <!-- Content -->
-        <div class="flex-1 text-center md:text-left">
-          <p class="text-sm uppercase tracking-widest text-gold-500 font-semibold mb-2">Program Overview</p>
-          <h2 class="font-heading text-2xl md:text-3xl font-bold text-white mb-3">
-            Hear the Full Story
-          </h2>
-          <p class="text-navy-300 mb-6 leading-relaxed">
-            18-minute audio overview of Work-Based Learning at BPS 101 — the vision, the structure, and why Batavia businesses are getting involved.
-          </p>
-
-          <!-- Audio Player -->
-          <div class="bg-navy-800/50 backdrop-blur rounded-lg p-4 border border-navy-700">
-            <audio
-              controls
-              class="w-full h-12 audio-player"
-              preload="metadata"
-              style="filter: sepia(20%) saturate(70%) grayscale(0) brightness(1.1) hue-rotate(350deg);"
-            >
-              <source src="https://res.cloudinary.com/dsbllwpbh/video/upload/v1770316764/Transforming_High_School_Internships_Into_Real_Work_cb5hst.mp4" type="video/mp4">
-              Your browser does not support the audio element.
-            </audio>
-            <div class="flex items-center justify-between mt-3 text-sm">
-              <span class="text-navy-400">Work-Based Learning at Batavia Public Schools</span>
-              <span class="text-navy-500">18:00</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
   <!-- Stats Bar -->
   <section class="bg-navy-900 text-white py-12">
     <div class="max-w-7xl mx-auto px-6 md:px-8">
@@ -734,50 +685,143 @@
 
       </div>
 
-      <!-- CTA -->
-      <div class="text-center mt-16">
-        <p class="text-navy-500 text-base mb-6">Ready to connect with Batavia students? It starts with one form.</p>
-        <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="bg-crimson-800 text-white px-10 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
-          Partner With Us
-        </button>
-      </div>
+      <!-- What Students Bring — 3 mini-cards -->
+      <div class="mt-20 md:mt-24 pt-16 border-t border-navy-100">
+        <p class="text-lg text-navy-600 leading-relaxed max-w-3xl mb-10">
+          By the time a student walks through your door, they've already completed a professional readiness bootcamp, applied and interviewed competitively for their placement, and committed to 60+ supervised hours. Real experience — while there's still time to matter.
+        </p>
+        <div class="grid md:grid-cols-3 gap-4 mb-16">
 
-    </div>
-  </section>
-
-  <!-- Promise / Equity Section -->
-  <section class="py-24 md:py-32 px-6 md:px-8">
-    <div class="max-w-7xl mx-auto">
-
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
-
-        <div class="lg:col-span-5">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-8 h-0.5 bg-crimson-800"></div>
-            <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold">Our Commitment</p>
-          </div>
-          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 mb-6">
-            Every student deserves <span class="text-crimson-800">access to great opportunities.</span>
-          </h2>
-        </div>
-
-        <div class="lg:col-span-6 lg:col-start-7">
-          <p class="text-xl leading-relaxed text-navy-700 mb-6">
-            Batavia has incredible businesses, professionals, and community leaders — and we've built real relationships with them so our students can learn directly from the best. Whether it's a hands-on placement, a job shadow, or a mentorship, WBL connects students with professionals in fields they're passionate about.
-          </p>
-          <p class="text-lg leading-relaxed text-navy-500 mb-8">
-            We open the doors, make the introductions, and support students every step of the way — so every Batavia student leaves with real experience, genuine confidence, and a professional network they earned on the job.
-          </p>
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-              </svg>
+          <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-crimson-800">
+            <div class="w-10 h-10 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
-            <p class="font-medium text-navy-900">Community-built, career-focused, and open to every student</p>
+            <h3 class="font-heading font-bold text-navy-900 mb-2">Pre-Screened &amp; Vetted</h3>
+            <p class="text-sm text-navy-600 leading-relaxed">Students apply and interview for every placement. By the time they arrive, they've already proven they want to be there.</p>
           </div>
+
+          <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-teal-600">
+            <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            </div>
+            <h3 class="font-heading font-bold text-navy-900 mb-2">Workplace-Ready on Day One</h3>
+            <p class="text-sm text-navy-600 leading-relaxed">Every student completes a readiness bootcamp covering professional communication, expectations, and conduct before their first day with you.</p>
+          </div>
+
+          <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-gold-500">
+            <div class="w-10 h-10 rounded-lg bg-gold-100 text-gold-600 flex items-center justify-center mb-4">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h3 class="font-heading font-bold text-navy-900 mb-2">60+ Hour Extended Preview</h3>
+            <p class="text-sm text-navy-600 leading-relaxed">A full-semester placement is the world's best extended job interview — see how they think, communicate, and contribute before you ever commit to hiring.</p>
+          </div>
+
         </div>
 
+        <!-- Two-column: CTA/contacts + Resources -->
+        <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
+
+          <div>
+            <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
+              <span>Interested? Fill Out the Partner Form</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </button>
+            <p class="text-sm text-navy-500 mt-3">Select the ways you'd like to partner with Batavia High School.</p>
+
+            <!-- Coordinator Contacts -->
+            <div class="mt-8 pt-6 border-t border-navy-200 space-y-4">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-heading font-bold text-navy-900">Michael Theriault</p>
+                  <p class="text-sm text-navy-500">Work-Based Learning Coordinator</p>
+                  <a href="mailto:michael.theriault@bps101.net" class="text-sm text-crimson-800 hover:text-crimson-700 font-medium">michael.theriault@bps101.net</a>
+                  <span class="text-navy-300 mx-2 text-xs">·</span>
+                  <a href="tel:6308008284" class="text-sm text-navy-600 hover:text-crimson-800 font-medium">(630) 800-8284</a>
+                  <span class="text-navy-300 mx-2 text-xs">·</span>
+                  <a href="https://x.com/Coach_Theriault" class="text-sm text-navy-600 hover:text-crimson-800 font-medium inline-flex items-center gap-1" aria-label="Michael Theriault on X">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </a>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="font-heading font-bold text-navy-900">Austun Savitski</p>
+                  <p class="text-sm text-navy-500">WBL Coordinator</p>
+                  <a href="mailto:austun.savitski@bps101.net" class="text-sm text-crimson-800 hover:text-crimson-700 font-medium">austun.savitski@bps101.net</a>
+                  <span class="text-navy-300 mx-2 text-xs">·</span>
+                  <a href="tel:6303734956" class="text-sm text-navy-600 hover:text-crimson-800 font-medium">(630) 373-4956</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6">
+
+            <!-- One-Pager Downloads -->
+            <div class="bg-navy-50 p-6 rounded-lg">
+              <h4 class="font-heading font-bold text-navy-900 mb-1">What does each partnership look like?</h4>
+              <p class="text-sm text-navy-500 mb-4">View our one-pagers for a full overview of each partnership type — each page includes a print option.</p>
+              <div class="flex flex-wrap gap-3">
+                <a href="partner-field-experience.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  Field Experience
+                </a>
+                <a href="partner-job-shadow.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  Job Shadow
+                </a>
+                <a href="partner-mentor-advisor.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  Mentor / Advisor
+                </a>
+                <a href="partner-guest-speaker.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                  Guest Speaker
+                </a>
+              </div>
+            </div>
+
+            <!-- Pathway spotlight — a career field, not a partnership type -->
+            <a href="partner-legal-pathway.html" target="_blank"
+               class="block bg-navy-900 text-white p-6 border-l-4 border-gold-500 hover:bg-navy-800 transition-colors group">
+              <div class="flex items-center justify-between gap-4 mb-2">
+                <div>
+                  <span class="inline-block text-xs uppercase tracking-widest font-heading font-bold text-gold-500 mb-1">Pathway Spotlight</span>
+                  <h4 class="font-heading font-bold text-lg leading-tight">The Legal Pathway</h4>
+                </div>
+                <svg class="w-4 h-4 text-gold-400 group-hover:text-gold-300 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+              <p class="text-white/65 text-sm">Exploring — and developing — the next generation of legal professionals. Attorneys, paralegals, courts, and legal-adjacent employers: how a placement works, and how we handle confidentiality.</p>
+            </a>
+
+            <!-- Our Commitment — pop-out instead of a standalone section -->
+            <button type="button" onclick="openModal('commitment')"
+               class="w-full text-left block bg-white border border-navy-200 p-6 hover:border-crimson-800 transition-colors group rounded-lg">
+              <div class="flex items-center justify-between gap-4 mb-2">
+                <div>
+                  <span class="inline-block text-xs uppercase tracking-widest font-heading font-bold text-crimson-800 mb-1">Our Commitment</span>
+                  <h4 class="font-heading font-bold text-lg leading-tight text-navy-900">Every Student Deserves Access</h4>
+                </div>
+                <svg class="w-4 h-4 text-navy-300 group-hover:text-crimson-800 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              </div>
+              <p class="text-navy-500 text-sm">Why WBL exists, and how we make sure every Batavia student gets a real shot at these opportunities.</p>
+            </button>
+
+          </div>
+
+        </div>
       </div>
 
     </div>
@@ -796,6 +840,29 @@
         <p class="text-lg text-navy-300 max-w-2xl mx-auto">
           Real stories from students, partners, and the program—see what WBL looks like in action.
         </p>
+      </div>
+
+      <!-- Audio Overview -->
+      <div class="max-w-2xl mx-auto mb-12 md:mb-16">
+        <div class="flex items-center gap-5 bg-navy-800/50 backdrop-blur rounded-lg p-5 border border-navy-700">
+          <div class="w-14 h-14 rounded-full bg-crimson-800 flex items-center justify-center shadow-lg shadow-crimson-800/30 flex-shrink-0 relative">
+            <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <div class="absolute inset-0 rounded-full border-2 border-crimson-400 animate-ping opacity-20"></div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="font-heading font-bold text-white text-sm mb-0.5">Prefer to listen? Hear the Full Story</p>
+            <p class="text-navy-400 text-xs mb-2">18-minute audio overview of Work-Based Learning at BPS 101 — the vision, the structure, and why Batavia businesses are getting involved.</p>
+            <audio
+              controls
+              class="w-full h-10 audio-player"
+              preload="metadata"
+              style="filter: sepia(20%) saturate(70%) grayscale(0) brightness(1.1) hue-rotate(350deg);"
+            >
+              <source src="https://res.cloudinary.com/dsbllwpbh/video/upload/v1770316764/Transforming_High_School_Internships_Into_Real_Work_cb5hst.mp4" type="video/mp4">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
       </div>
 
       <!-- Video Grid — horizontal scroll on mobile, 3-col grid on desktop -->
@@ -928,183 +995,6 @@
             </svg>
           </a>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- For Business Section -->
-  <section id="business" class="py-24 md:py-32 px-6 md:px-8">
-    <div class="max-w-7xl mx-auto">
-
-      <!-- Header -->
-      <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end mb-12 md:mb-16">
-        <div>
-          <p class="text-sm uppercase tracking-widest text-teal-600 font-semibold mb-4">For Business Partners</p>
-          <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-navy-900">
-            Build your future workforce.
-          </h2>
-        </div>
-        <p class="text-lg text-navy-600 leading-relaxed">
-          By the time a student walks through your door, they've already completed a professional readiness bootcamp, applied and interviewed competitively for their placement, and committed to 60+ supervised hours. Real experience — while there's still time to matter.
-        </p>
-      </div>
-
-      <!-- What Students Bring — 3 mini-cards -->
-      <div class="grid md:grid-cols-3 gap-4 mb-16">
-
-        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-crimson-800">
-          <div class="w-10 h-10 rounded-lg bg-crimson-100 text-crimson-800 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <h3 class="font-heading font-bold text-navy-900 mb-2">Pre-Screened &amp; Vetted</h3>
-          <p class="text-sm text-navy-600 leading-relaxed">Students apply and interview for every placement. By the time they arrive, they've already proven they want to be there.</p>
-        </div>
-
-        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-teal-600">
-          <div class="w-10 h-10 rounded-lg bg-teal-100 text-teal-600 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-          </div>
-          <h3 class="font-heading font-bold text-navy-900 mb-2">Workplace-Ready on Day One</h3>
-          <p class="text-sm text-navy-600 leading-relaxed">Every student completes a readiness bootcamp covering professional communication, expectations, and conduct before their first day with you.</p>
-        </div>
-
-        <div class="bg-navy-50 rounded-lg p-6 border-t-4 border-gold-500">
-          <div class="w-10 h-10 rounded-lg bg-gold-100 text-gold-600 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          </div>
-          <h3 class="font-heading font-bold text-navy-900 mb-2">60+ Hour Extended Preview</h3>
-          <p class="text-sm text-navy-600 leading-relaxed">A full-semester placement is the world's best extended job interview — see how they think, communicate, and contribute before you ever commit to hiring.</p>
-        </div>
-
-      </div>
-
-      <!-- Two-column: CTA/contacts + Partnership tiers -->
-      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
-
-        <div>
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScnyd4FPXKvV7HAByfdukmTTewSg4PdNNEb8lzEtD0sABmMxw/viewform?usp=header','_blank')" class="inline-flex items-center gap-3 bg-crimson-800 text-white px-8 py-4 text-sm font-semibold uppercase tracking-wider hover:bg-crimson-700 transition-colors">
-            <span>Interested? Fill Out the Partner Form</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-            </svg>
-          </button>
-          <p class="text-sm text-navy-500 mt-3">Select the ways you'd like to partner with Batavia High School.</p>
-
-          <!-- Coordinator Contacts -->
-          <div class="mt-8 pt-6 border-t border-navy-200 space-y-4">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-              </div>
-              <div>
-                <p class="font-heading font-bold text-navy-900">Michael Theriault</p>
-                <p class="text-sm text-navy-500">Work-Based Learning Coordinator</p>
-                <a href="mailto:michael.theriault@bps101.net" class="text-sm text-crimson-800 hover:text-crimson-700 font-medium">michael.theriault@bps101.net</a>
-                <span class="text-navy-300 mx-2 text-xs">·</span>
-                <a href="tel:6308008284" class="text-sm text-navy-600 hover:text-crimson-800 font-medium">(630) 800-8284</a>
-                <span class="text-navy-300 mx-2 text-xs">·</span>
-                <a href="https://x.com/Coach_Theriault" class="text-sm text-navy-600 hover:text-crimson-800 font-medium inline-flex items-center gap-1" aria-label="Michael Theriault on X">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-              </div>
-            </div>
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-navy-100 text-navy-600 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-              </div>
-              <div>
-                <p class="font-heading font-bold text-navy-900">Austun Savitski</p>
-                <p class="text-sm text-navy-500">WBL Coordinator</p>
-                <a href="mailto:austun.savitski@bps101.net" class="text-sm text-crimson-800 hover:text-crimson-700 font-medium">austun.savitski@bps101.net</a>
-                <span class="text-navy-300 mx-2 text-xs">·</span>
-                <a href="tel:6303734956" class="text-sm text-navy-600 hover:text-crimson-800 font-medium">(630) 373-4956</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Partnership Tiers -->
-        <div class="space-y-6">
-
-          <div class="bg-navy-50 p-6 border-l-4 border-navy-300 hover:border-crimson-800 transition-colors cursor-pointer group" onclick="openModal('job-shadow')">
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-heading font-bold text-lg text-navy-900">Job Shadow</h3>
-              <svg class="w-4 h-4 text-navy-400 group-hover:text-crimson-800 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </div>
-            <p class="text-navy-600 text-sm">Give students the opportunity to observe your workplace for a day or a few hours.</p>
-          </div>
-
-          <div class="bg-navy-50 p-6 border-l-4 border-navy-300 hover:border-teal-600 transition-colors cursor-pointer group" onclick="openModal('guest-speaker')">
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-heading font-bold text-lg text-navy-900">Guest Speaking</h3>
-              <svg class="w-4 h-4 text-navy-400 group-hover:text-teal-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </div>
-            <p class="text-navy-600 text-sm">Share your knowledge, career insights, and professional experience with students.</p>
-          </div>
-
-          <div class="bg-navy-50 p-6 border-l-4 border-navy-300 hover:border-gold-500 transition-colors cursor-pointer group" onclick="openModal('mentorship')">
-            <div class="flex items-center justify-between mb-2">
-              <h3 class="font-heading font-bold text-lg text-navy-900">Mentor / Advisor</h3>
-              <svg class="w-4 h-4 text-navy-400 group-hover:text-gold-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </div>
-            <p class="text-navy-600 text-sm">Support students through guidance, project mentorship, and industry expertise.</p>
-          </div>
-
-          <div class="bg-crimson-800 text-white p-6 border-l-4 border-gold-500 cursor-pointer hover:bg-crimson-700 transition-colors group" onclick="openModal('field-experience-placement')">
-            <div class="flex items-center justify-between mb-2">
-              <div class="flex items-center gap-2">
-                <h3 class="font-heading font-bold text-lg">Field Experience Placement</h3>
-              </div>
-              <svg class="w-4 h-4 text-gold-400 group-hover:text-gold-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </div>
-            <span class="inline-block bg-gold-500 text-navy-900 text-xs font-bold px-2 py-0.5 rounded mb-2">GOLD STANDARD</span>
-            <p class="text-crimson-100 text-sm">Host and supervise hands-on placements where students gain 60+ hours of practical workplace experience.</p>
-          </div>
-
-          <!-- One-Pager Downloads -->
-          <div class="mt-8 bg-navy-50 p-6 rounded-lg">
-            <h4 class="font-heading font-bold text-navy-900 mb-1">What does each partnership look like?</h4>
-            <p class="text-sm text-navy-500 mb-4">View our one-pagers for a full overview of each partnership type — each page includes a print option.</p>
-            <div class="flex flex-wrap gap-3">
-              <a href="partner-field-experience.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Field Experience
-              </a>
-              <a href="partner-job-shadow.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Job Shadow
-              </a>
-              <a href="partner-mentor-advisor.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Mentor / Advisor
-              </a>
-              <a href="partner-guest-speaker.html" target="_blank" class="inline-flex items-center gap-2 bg-white border border-navy-200 text-navy-700 px-4 py-2.5 text-sm font-medium hover:border-crimson-800 hover:text-crimson-800 transition-colors rounded">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                Guest Speaker
-              </a>
-            </div>
-          </div>
-
-          <!-- Pathway spotlight — a career field, not a partnership type -->
-          <a href="partner-legal-pathway.html" target="_blank"
-             class="mt-4 block bg-navy-900 text-white p-6 border-l-4 border-gold-500 hover:bg-navy-800 transition-colors group">
-            <div class="flex items-center justify-between gap-4 mb-2">
-              <div>
-                <span class="inline-block text-xs uppercase tracking-widest font-heading font-bold text-gold-500 mb-1">Pathway Spotlight</span>
-                <h4 class="font-heading font-bold text-lg leading-tight">The Legal Pathway</h4>
-              </div>
-              <svg class="w-4 h-4 text-gold-400 group-hover:text-gold-300 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-            </div>
-            <p class="text-white/65 text-sm">Exploring — and developing — the next generation of legal professionals. Attorneys, paralegals, courts, and legal-adjacent employers: how a placement works, and how we handle confidentiality.</p>
-          </a>
-
-        </div>
-
       </div>
 
     </div>
@@ -1621,6 +1511,41 @@
           <span>Host a Field Experience Student</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Our Commitment -->
+  <div id="modal-commitment" class="modal-backdrop items-center justify-center p-6">
+    <div class="modal-content bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-lg">
+      <div class="relative h-32 overflow-hidden rounded-t-lg bg-gradient-to-br from-navy-900 to-crimson-900"></div>
+      <div class="p-8 md:p-10">
+        <div class="flex justify-between items-start mb-6">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-0.5 bg-crimson-800"></div>
+            <p class="text-sm uppercase tracking-widest text-crimson-800 font-semibold">Our Commitment</p>
+          </div>
+          <button onclick="closeModal('commitment')" class="w-10 h-10 rounded-full border border-navy-200 flex items-center justify-center hover:bg-crimson-800 hover:text-white hover:border-crimson-800 transition-all flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <h2 class="font-heading text-2xl md:text-3xl font-bold tracking-tight text-navy-900 mb-6">
+          Every student deserves <span class="text-crimson-800">access to great opportunities.</span>
+        </h2>
+        <p class="text-lg leading-relaxed text-navy-700 mb-6">
+          Batavia has incredible businesses, professionals, and community leaders — and we've built real relationships with them so our students can learn directly from the best. Whether it's a hands-on placement, a job shadow, or a mentorship, WBL connects students with professionals in fields they're passionate about.
+        </p>
+        <p class="text-base leading-relaxed text-navy-500 mb-8">
+          We open the doors, make the introductions, and support students every step of the way — so every Batavia student leaves with real experience, genuine confidence, and a professional network they earned on the job.
+        </p>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center flex-shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <p class="font-medium text-navy-900">Community-built, career-focused, and open to every student</p>
+        </div>
       </div>
     </div>
   </div>
